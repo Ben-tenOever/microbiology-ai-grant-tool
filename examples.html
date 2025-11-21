@@ -80,6 +80,7 @@
       border: 1px solid var(--border-subtle);
       margin-bottom: 1.5rem;
     }
+    
     .tag {
       display: inline-block;
       padding: 0.15rem 0.6rem;
@@ -89,6 +90,23 @@
       color: #3d2a86;
       font-size: 0.75rem;
       white-space: nowrap;
+    }
+    .tag-row {
+      margin: 0.35rem 0 0.6rem;
+    }
+    .search-card {
+      border-left: 4px solid var(--nyu-purple);
+    }
+    .search-box {
+      margin-top: 0.75rem;
+    }
+    .search-box input {
+      width: 100%;
+      max-width: 420px;
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
     }
     ul, ol {
       padding-left: 1.2rem;
@@ -183,252 +201,259 @@
 
   <main>
     <section id="teams">
-      <div class="card">
-        <h2>Cross-Lab Synergy Mapping</h2>
-        <p>
-          The concepts below illustrate how Microbiology and affiliated labs can be assembled into competitive,
-          mechanistically grounded teams for major NIH and federal opportunities. They are starting points for
-          discussion rather than fixed prescriptions.
-        </p>
-        <p class="note">
-          Each card includes a succinct concept, why it is competitive, and a high-level funding fit. Use the
-          &ldquo;Copy team summary&rdquo; button to paste into emails, whiteboard notes, or AI prompts for further
-          refinement.
-        </p>
-      </div>
+  <div class="card">
+    <h2>Teams &amp; Case Studies: Grants.gov-Aligned Opportunities</h2>
+    <p>
+      The opportunities below illustrate how Microbiology and affiliated labs can be assembled into competitive,
+      mechanistically grounded teams for specific NIH and federal funding announcements pulled from Grants.gov.
+    </p>
+    <p class="note">
+      Each card lists a high-level project concept, the core team, a key funding opportunity, and a concise
+      <strong>Rationale</strong> for why this team is well-positioned.
+    </p>
+  </div>
 
-      <!-- 1 -->
-      <div class="card" data-team-id="1">
-        <h3>1. Viral Fidelity, Vector Tropism &amp; Host Sensing Across Divergent RNA Viruses</h3>
-        <p><strong>Possible Team Members:</strong> tenOever · Stapleford · Mohr · Wilson · Ortigoza</p>
-        <div>
-          <span class="tag">Innate sensing</span>
-          <span class="tag">Viral fidelity</span>
-          <span class="tag">Arboviruses</span>
-          <span class="tag">Orthomyxoviruses</span>
-          <span class="tag">Paramyxovirus vectors</span>
-        </div>
-        <p><strong>Concept:</strong> Compare how arboviruses, orthomyxoviruses, and paramyxovirus-based vectors
-        differ in replication fidelity, dsRNA exposure, PRR activation, and superinfection exclusion to define
-        general rules of viral detectability.</p>
-        <p><strong>Why competitive:</strong> Cross-family, mechanistically deep, and uniquely positioned to
-        explain when and why innate sensing is triggered, integrating natural pathogens with engineered vectors.</p>
-        <p><strong>Funding fit:</strong> NIAID molecular virology and host response; NIH systems immunology;
-        DARPA/ARPA-H for universal viral sensing rules.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(1)">Copy team summary</button>
-        </div>
-        <div id="status-1" class="status"></div>
-      </div>
+  <div class="card search-card">
+    <h3>Search by Faculty Member</h3>
+    <p class="note">
+      Type a <strong>last name</strong> to show only the projects that include that faculty member. Clear the
+      box to show all teams again.
+    </p>
+    <div class="search-box">
+      <input
+        type="text"
+        id="team-search-input"
+        placeholder="Search by last name (e.g., tenOever, Khanna, Rodriguez)"
+        oninput="filterTeamsByName()"
+      />
+    </div>
+  </div>
 
-      <!-- 2 -->
-      <div class="card" data-team-id="2">
-        <h3>2. Antimicrobial Resistance Networks &amp; Stress Pathways as Therapeutic Targets</h3>
-        <p><strong>Possible Team Members:</strong> Shopsin · Pironti · Andrew J. Darwin · K. Heran Darwin · Ratner</p>
-        <div>
-          <span class="tag">AMR</span>
-          <span class="tag">Hospital pathogens</span>
-          <span class="tag">Envelope stress</span>
-          <span class="tag">Proteostasis</span>
-          <span class="tag">Pediatrics</span>
-        </div>
-        <p><strong>Concept:</strong> Define conserved envelope stress responses, proteasome-dependent proteostasis,
-        and resistance gene networks across <em>S. aureus</em>, Enterobacteriaceae, <em>Pseudomonas</em>,
-        <em>Yersinia</em>, and mycobacteria, linked to pediatric and adult clinical isolates.</p>
-        <p><strong>Why competitive:</strong> Integrates mechanistic bacteriology with AMR genomics and clinical
-        context, addressing a clear national priority.</p>
-        <p><strong>Funding fit:</strong> CDC/BARDA AMR initiatives; NIAID bacteriology and AMR R01s; DoD bacterial
-        threat reduction programs.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(2)">Copy team summary</button>
-        </div>
-        <div id="status-2" class="status"></div>
-      </div>
+  <!-- 1 -->
+  <div class="card opportunity-card" data-team-id="1" data-members="Ortigoza, tenOever, Duerr, Herati, Khanna, Weiser">
+    <h3>1. Infant Influenza Imprinting and Lifelong Immunity</h3>
+    <p><strong>Possible team members:</strong> Ortigoza · tenOever · Duerr · Herati · Khanna · Weiser</p>
+    <div class="tag-row">
+      <span class="tag">Influenza</span>
+      <span class="tag">Infant immunity</span>
+      <span class="tag">Respiratory viruses</span>
+      <span class="tag">Innate &amp; adaptive</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> FOR-AI-27-024 – Impact of Initial Influenza Exposure on Immunity in Infants (NIAID, Forecast).</p>
+    <p><strong>Rationale:</strong> Engineered influenza vectors (e.g., abortive / high-fidelity variants) allow precise control over the nature of first exposure in infant-like models, while human cohorts and advanced serology/systems immunology provide translational relevance.</p>
+    <p><strong>Notes:</strong> Position as a mechanistic dissection of “original antigenic sin” in early life, tying programmable viral biology to long-term B/T cell imprinting in lung and systemic compartments.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(1)">Copy team summary</button>
+    <div id="status-1" class="status"></div>
+  </div>
 
-      <!-- 3 -->
-      <div class="card" data-team-id="3">
-        <h3>3. Nuclear Receptors as Modulators of Infection, Immunity &amp; Tissue State</h3>
-        <p><strong>Possible Team Members:</strong> Garabedian · Khanna · Schneider · tenOever · Ortigoza</p>
-        <div>
-          <span class="tag">Nuclear receptors</span>
-          <span class="tag">Inflammation</span>
-          <span class="tag">Macrophages</span>
-          <span class="tag">Respiratory viruses</span>
-        </div>
-        <p><strong>Concept:</strong> Define how AR, GR, and LXRα signaling reprogram macrophages and tissue
-        stroma, shaping antiviral tone, inflammatory set points, and viral replication dynamics in lung and
-        other mucosal sites.</p>
-        <p><strong>Why competitive:</strong> Brings distinct nuclear receptor expertise into infection biology,
-        with direct implications for steroid use, sex differences, and immunometabolic therapies.</p>
-        <p><strong>Funding fit:</strong> NIAID immunometabolism; NHLBI lung inflammation; NCI inflammation–cancer
-        cross-talk.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(3)">Copy team summary</button>
-        </div>
-        <div id="status-3" class="status"></div>
-      </div>
+  <!-- 2 -->
+  <div class="card opportunity-card" data-team-id="2" data-members="Rodriguez, Stapleford, Pironti, Ortigoza, Khanna, Duerr, Herati">
+    <h3>2. Global Infectious Diseases Training Platform</h3>
+    <p><strong>Possible team members:</strong> Rodriguez · Stapleford · Pironti · Ortigoza · Khanna · Duerr · Herati</p>
+    <div class="tag-row">
+      <span class="tag">Global health</span>
+      <span class="tag">Training grant</span>
+      <span class="tag">Parasitology</span>
+      <span class="tag">Arboviruses</span>
+      <span class="tag">Respiratory viruses</span>
+      <span class="tag">AMR</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-24-174 – Global Infectious Disease Research Training Program (D43, NIH).</p>
+    <p><strong>Rationale:</strong> Existing partnerships in malaria, Chagas disease, arboviruses, AMR, and respiratory viruses span both mechanistic and translational work, ideal for LMIC-focused capacity building.</p>
+    <p><strong>Notes:</strong> Organize thematic training tracks (vector-borne disease, AMR, respiratory viruses, parasitic disease) sharing omics, immunology, and data science cores, with long-term trainee exchanges at NYU.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(2)">Copy team summary</button>
+    <div id="status-2" class="status"></div>
+  </div>
 
-      <!-- 4 -->
-      <div class="card" data-team-id="4">
-        <h3>4. Pediatric Respiratory Infection &amp; Viral–Bacterial Co-Pathogenesis</h3>
-        <p><strong>Possible Team Members:</strong> Ratner · Weiser · Ortigoza · Khanna · Herati</p>
-        <div>
-          <span class="tag">Pediatrics</span>
-          <span class="tag">Respiratory viruses</span>
-          <span class="tag">Pneumococcus</span>
-          <span class="tag">Mucosal immunity</span>
-        </div>
-        <p><strong>Concept:</strong> Dissect pediatric airway disease trajectories by integrating viral cohorts,
-        pneumococcal colonization biology, macrophage/NAM programming, and immune maturation.</p>
-        <p><strong>Why competitive:</strong> Bridges clinical pediatrics with mechanistic airway biology, suited
-        for multi-PI child health initiatives.</p>
-        <p><strong>Funding fit:</strong> NICHD pediatric infection and immunity; NIAID respiratory pathogen calls.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(4)">Copy team summary</button>
-        </div>
-        <div id="status-4" class="status"></div>
-      </div>
+  <!-- 3 -->
+  <div class="card opportunity-card" data-team-id="3" data-members="Rodriguez, Stapleford, Pironti, Khanna">
+    <h3>3. Mechanisms and Surveillance of Parasitic &amp; Neglected Tropical Diseases</h3>
+    <p><strong>Possible team members:</strong> Rodriguez · Stapleford · Pironti · Khanna</p>
+    <div class="tag-row">
+      <span class="tag">NTDs</span>
+      <span class="tag">Parasitology</span>
+      <span class="tag">Vector-borne</span>
+      <span class="tag">Immunology</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> RFA-CK-26-104 – Eliminating Parasitic and Neglected Tropical Disease Threats and Research to Reduce Threats to Americans (CDC, Forecast).</p>
+    <p><strong>Rationale:</strong> Combines deep mechanistic work on parasite–host interactions and disease (including anemia and neurologic outcomes) with genomic surveillance of resistance and vector biology.</p>
+    <p><strong>Notes:</strong> Frame as an integrated bench-to-field program: mechanistic targets, immune tolerance/repair pathways, and genomics-driven surveillance in at-risk populations.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(3)">Copy team summary</button>
+    <div id="status-3" class="status"></div>
+  </div>
 
-      <!-- 5 -->
-      <div class="card" data-team-id="5">
-        <h3>5. RNA Regulation, Epitranscriptomics &amp; Stress Granules in Infection</h3>
-        <p><strong>Possible Team Members:</strong> Belasco · Schneider · Mohr · Wilson · Landau</p>
-        <div>
-          <span class="tag">RNA biology</span>
-          <span class="tag">Translation</span>
-          <span class="tag">Stress granules</span>
-          <span class="tag">Herpesviruses</span>
-          <span class="tag">Retroviruses</span>
-        </div>
-        <p><strong>Concept:</strong> Define how RNA caps, 5′ end states, mRNA decay, translation reprogramming,
-        and stress granule biology shape virus replication and innate activation across bacterial, herpesviral,
-        and retroviral systems.</p>
-        <p><strong>Why competitive:</strong> Concentrates internationally recognized RNA and translation expertise
-        on infection and oncogenic inflammation questions.</p>
-        <p><strong>Funding fit:</strong> NIGMS MIRA and RNA programs; NIAID host–virus interaction mechanisms.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(5)">Copy team summary</button>
-        </div>
-        <div id="status-5" class="status"></div>
-      </div>
+  <!-- 4 -->
+  <div class="card opportunity-card" data-team-id="4" data-members="Shopsin, Pironti, Weiser, A. Darwin, H. Darwin">
+    <h3>4. Food–Clinic Integrated AMR Surveillance</h3>
+    <p><strong>Possible team members:</strong> Shopsin · Pironti · Weiser · A. Darwin · H. Darwin</p>
+    <div class="tag-row">
+      <span class="tag">Antimicrobial resistance</span>
+      <span class="tag">Surveillance</span>
+      <span class="tag">Food safety</span>
+      <span class="tag">Bacterial pathogenesis</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-25-014 – NARMS Cooperative Agreement Program to Strengthen Antibiotic Resistance Surveillance in Retail Food Specimens (FDA).</p>
+    <p><strong>Rationale:</strong> Clinical AMR expertise in <em>Staphylococcus</em> and Enterobacteriaceae, combined with basic science on envelope stress, persistence, and virulence, positions the department as a high-value mechanistic node in NARMS.</p>
+    <p><strong>Notes:</strong> Propose an integrated pipeline connecting retail-food isolates to hospital and community surveillance, layered with functional genomics and in-depth stress/virulence phenotyping.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(4)">Copy team summary</button>
+    <div id="status-4" class="status"></div>
+  </div>
 
-      <!-- 6 -->
-      <div class="card" data-team-id="6">
-        <h3>6. Microbiome–Host–Pathogen Interaction Maps</h3>
-        <p><strong>Possible Team Members:</strong> Weiser · Khanna · Rodriguez · Ratner · (affiliated: Schluter, Shenhav)</p>
-        <div>
-          <span class="tag">Microbiome</span>
-          <span class="tag">Ecology</span>
-          <span class="tag">Helminths</span>
-          <span class="tag">Respiratory tract</span>
-        </div>
-        <p><strong>Concept:</strong> Identify gut and airway microbial configurations, metabolites, and immune
-        circuits that modulate susceptibility to pneumococcal disease, helminth-driven pathology, and viral
-        infection.</p>
-        <p><strong>Why competitive:</strong> Connects microbiome methodologists with mechanistic infection and
-        immunology labs; ideal for multi-omic and spatial mapping.</p>
-        <p><strong>Funding fit:</strong> NIDDK and NIAID microbiome initiatives; NIH multi-omic mapping programs.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(6)">Copy team summary</button>
-        </div>
-        <div id="status-6" class="status"></div>
-      </div>
+  <!-- 5 -->
+  <div class="card opportunity-card" data-team-id="5" data-members="Ortigoza, Khanna, tenOever, Duerr, Herati, Pironti">
+    <h3>5. Post-Viral Lung Disease through a TOPMed Lens</h3>
+    <p><strong>Possible team members:</strong> Ortigoza · Khanna · tenOever · Duerr · Herati · Pironti</p>
+    <div class="tag-row">
+      <span class="tag">TOPMed</span>
+      <span class="tag">Lung disease</span>
+      <span class="tag">Multi-omics</span>
+      <span class="tag">Respiratory viruses</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-25-447 – NHLBI TOPMed: Omics Phenotypes of Heart, Lung, and Blood Disorders (X01).</p>
+    <p><strong>Rationale:</strong> Respiratory-virus cohorts, macrophage biology, and programmable influenza variants enable multi-omic definition of lung trajectories after acute infection.</p>
+    <p><strong>Notes:</strong> Focus on how infection history and innate/adaptive imprinting shape long-term lung phenotypes, using single-cell, spatial, and serologic datasets integrated with clinical outcomes.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(5)">Copy team summary</button>
+    <div id="status-5" class="status"></div>
+  </div>
 
-      <!-- 7 -->
-      <div class="card" data-team-id="7">
-        <h3>7. Vector Engineering &amp; Programmable Therapeutics</h3>
-        <p><strong>Possible Team Members:</strong> tenOever · Landau · Boeke · Mohr · Wilson</p>
-        <div>
-          <span class="tag">Gene therapy</span>
-          <span class="tag">RNA vectors</span>
-          <span class="tag">AAV</span>
-          <span class="tag">Synthetic genomics</span>
-        </div>
-        <p><strong>Concept:</strong> Advance Sendai, AAV, and synthetic genomic platforms for gene editing,
-        immunomodulation, and tissue-specific delivery using miRNA logic and tropism gating.</p>
-        <p><strong>Why competitive:</strong> High translational relevance with a clear technology pipeline from
-        bench to vector platforms and potential clinical translation.</p>
-        <p><strong>Funding fit:</strong> NHGRI and NHLBI gene therapy programs; DARPA/ARPA-H modular delivery
-        initiatives.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(7)">Copy team summary</button>
-        </div>
-        <div id="status-7" class="status"></div>
-      </div>
+  <!-- 6 -->
+  <div class="card opportunity-card" data-team-id="6" data-members="Garabedian, Landau, Rodriguez, Stapleford, Duerr, Herati">
+    <h3>6. Co-Infection, Chronic Inflammation, and Cancer Progression</h3>
+    <p><strong>Possible team members:</strong> Garabedian · Landau · Rodriguez · Stapleford · Duerr · Herati</p>
+    <div class="tag-row">
+      <span class="tag">Cancer</span>
+      <span class="tag">Co-infection</span>
+      <span class="tag">Inflammation</span>
+      <span class="tag">Immunology</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-25-082 / PAR-25-083 – Co-infection and Cancer (R01/R21, NCI).</p>
+    <p><strong>Rationale:</strong> Nuclear receptor signaling, chronic infections (viral and parasitic), and arboviral immune modulation provide multiple entry points into how co-infection rewires tumor immune environments.</p>
+    <p><strong>Notes:</strong> Build projects around infection-driven rewiring of AR/GR/LXR pathways, macrophage/tumor crosstalk, and altered immunosurveillance in solid tumors.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(6)">Copy team summary</button>
+    <div id="status-6" class="status"></div>
+  </div>
 
-      <!-- 8 -->
-      <div class="card" data-team-id="8">
-        <h3>8. Immune Aging, Chronic Infection &amp; Restriction Pathways</h3>
-        <p><strong>Possible Team Members:</strong> Herati · Duerr · Landau · Khanna</p>
-        <div>
-          <span class="tag">Immune aging</span>
-          <span class="tag">HIV</span>
-          <span class="tag">Restriction factors</span>
-          <span class="tag">Macrophages</span>
-        </div>
-        <p><strong>Concept:</strong> Track how aging modifies restriction factors, macrophage circuits,
-        interferon kinetics, and vaccine responses across HIV, influenza, and emerging vector platforms.</p>
-        <p><strong>Why competitive:</strong> Aligns with growing interest in aging and infection outcomes,
-        vaccine responsiveness, and lifelong immunity.</p>
-        <p><strong>Funding fit:</strong> NIAID HIV &amp; aging initiatives; NIA immunosenescence and vaccine
-        response mechanisms.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(8)">Copy team summary</button>
-        </div>
-        <div id="status-8" class="status"></div>
-      </div>
+  <!-- 7 -->
+  <div class="card opportunity-card" data-team-id="7" data-members="Landau, Lee, Duerr, Herati">
+    <h3>7. Structure-Guided HIV Immunogen Design</h3>
+    <p><strong>Possible team members:</strong> Landau · Lee · Duerr · Herati</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">Structural biology</span>
+      <span class="tag">Vaccines</span>
+      <span class="tag">bNAbs</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> RFA-AI-27-020 – Consortia for Structure-based Immunogen Design for HIV (CSID-HIV, NIAID).</p>
+    <p><strong>Rationale:</strong> Brings together structural insights into Env/host interactions, expertise in restriction factors and decoys, and high-end serology/systems immunology.</p>
+    <p><strong>Notes:</strong> Organize around iterative structure-guided immunogen design, deep antibody characterization, and Tfh/B cell correlates of broadly neutralizing responses.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(7)">Copy team summary</button>
+    <div id="status-7" class="status"></div>
+  </div>
 
-      <!-- 9 -->
-      <div class="card" data-team-id="9">
-        <h3>9. Parasite–Host Inflammatory Circuits &amp; Cross-Pathogen Principles</h3>
-        <p><strong>Possible Team Members:</strong> Rodriguez · Khanna · K. Heran Darwin · Schneider · tenOever</p>
-        <div>
-          <span class="tag">Parasites</span>
-          <span class="tag">Tuberculosis</span>
-          <span class="tag">Inflammation</span>
-          <span class="tag">Innate sensing</span>
-        </div>
-        <p><strong>Concept:</strong> Compare how malaria, <em>Trypanosoma</em>, mycobacteria, and viral infections
-        manipulate inflammation, metabolic stress, and immune exhaustion to identify conserved danger integration
-        mechanisms.</p>
-        <p><strong>Why competitive:</strong> Unites global health pathogens with mechanistic immunology and
-        inflammation biology, opening pathways to broadly relevant therapeutics.</p>
-        <p><strong>Funding fit:</strong> NIAID tropical disease mechanisms; immunometabolism and inflammation
-        initiatives.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(9)">Copy team summary</button>
-        </div>
-        <div id="status-9" class="status"></div>
-      </div>
+  <!-- 8 -->
+  <div class="card opportunity-card" data-team-id="8" data-members="Landau, Duerr, Herati, tenOever, Lee">
+    <h3>8. Programmable Vectors for HIV Vaccine Discovery</h3>
+    <p><strong>Possible team members:</strong> Landau · Duerr · Herati · tenOever · Lee</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">Vectors</span>
+      <span class="tag">Vaccines</span>
+      <span class="tag">Systems immunology</span>
+      <span class="tag">Structural biology</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-24-037 – HIV Vaccine Research and Design (HIVRAD) Program (P01, NIAID).</p>
+    <p><strong>Rationale:</strong> Unique ability to combine programmable paramyxovirus vectors, structural immunogen design, and human/NHP systems immunology into a cohesive program.</p>
+    <p><strong>Notes:</strong> Envision projects on vector engineering, structure-based antigen optimization, and correlates-of-protection mapping, with shared NHP, serology, and bioinformatics cores.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(8)">Copy team summary</button>
+    <div id="status-8" class="status"></div>
+  </div>
 
-      <!-- 10 -->
-      <div class="card" data-team-id="10">
-        <h3>10. A Full-Department Mechanistic Network: Toward a Microbiology Program Project</h3>
-        <p><strong>Possible Team Members:</strong> Department-wide network, including:
-        Belasco · Andrew J. Darwin · K. Heran Darwin · Garabedian · Khanna · Landau · Herati · Mohr · Wilson ·
-        Rodriguez · Schneider · Shopsin · Pironti · Stapleford · tenOever · Weiser · Ortigoza · Ratner
-        (with affiliates as appropriate).</p>
-        <div>
-          <span class="tag">Mechanistic microbiology</span>
-          <span class="tag">Host–pathogen</span>
-          <span class="tag">Innate immunity</span>
-          <span class="tag">Vectors</span>
-          <span class="tag">AMR</span>
-          <span class="tag">Global health</span>
-        </div>
-        <p><strong>Concept:</strong> Integrate envelope stress, proteostasis, RNA and translation control,
-        viral sensing, vector engineering, mucosal immunity, microbiome ecology, pediatric infection, and
-        global health pathogens into a unified mechanistic framework.</p>
-        <p><strong>Why competitive:</strong> Provides the intellectual skeleton for a future P01 or center grant,
-        highlighting how diverse labs connect around shared questions and technologies.</p>
-        <p><strong>Funding fit:</strong> NIAID program project (P01) in host–pathogen biology; center-level
-        initiatives; ARPA-H multi-platform efforts.</p>
-        <div class="btn-row">
-          <button class="btn" onclick="copyTeamSummary(10)">Copy team summary</button>
-        </div>
-        <div id="status-10" class="status"></div>
-      </div>
-    </section>
+  <!-- 9 -->
+  <div class="card opportunity-card" data-team-id="9" data-members="Herati, H. Darwin, Rodriguez, Garabedian, Landau, Duerr">
+    <h3>9. Immunometabolism of HIV-Driven TB and HBV Risk</h3>
+    <p><strong>Possible team members:</strong> Herati · H. Darwin · Rodriguez · Garabedian · Landau · Duerr</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">TB</span>
+      <span class="tag">HBV</span>
+      <span class="tag">Immunometabolism</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-25-315 / PAR-25-316 – Elucidating Immunometabolic Responses to HIV Infection that Increase TB or HBV Risk (R01/R21).</p>
+    <p><strong>Rationale:</strong> Combines human immunometabolic profiling in HIV with mechanistic TB models and nuclear-receptor-driven metabolic control of inflammation.</p>
+    <p><strong>Notes:</strong> Use parallel human and model systems to define the immunometabolic states that foster TB/HBV persistence, reactivation, or poor outcomes, and test targeted interventions.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(9)">Copy team summary</button>
+    <div id="status-9" class="status"></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card opportunity-card" data-team-id="10" data-members="Landau, Herati, Duerr, Garabedian">
+    <h3>10. HBV Cure Strategies in People Living with HIV</h3>
+    <p><strong>Possible team members:</strong> Landau · Herati · Duerr · Garabedian</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">HBV</span>
+      <span class="tag">Cure</span>
+      <span class="tag">Vectors</span>
+      <span class="tag">Liver disease</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> FOR-AI-27-017 – Multidisciplinary Research to Accelerate Hepatitis B Cure in Persons Living with HIV and HBV (MRA-HBV, NIAID, Forecast).</p>
+    <p><strong>Rationale:</strong> Vector-based decoys/biologics, immunologic dissection of dysfunctional T/B responses, and nuclear receptor/metabolic expertise in liver disease align directly with FOA priorities.</p>
+    <p><strong>Notes:</strong> Position NYU as a mechanistic hub within a larger multi-site consortium, focusing on novel biologic strategies and immune reprogramming in HIV/HBV co-infection.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(10)">Copy team summary</button>
+    <div id="status-10" class="status"></div>
+  </div>
+
+  <!-- 11 -->
+  <div class="card opportunity-card" data-team-id="11" data-members="Herati, Duerr, Pironti">
+    <h3>11. HIV, Chronic Inflammation, and Clonal Hematopoiesis</h3>
+    <p><strong>Possible team members:</strong> Herati · Duerr · Pironti</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">CHIP</span>
+      <span class="tag">Hematology</span>
+      <span class="tag">Systems immunology</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> RFA-HL-27-001 – Role of HIV Infection and Chronic Inflammation in Clonal Hematopoiesis (NHLBI, Forecast).</p>
+    <p><strong>Rationale:</strong> Microbiology contributes deep expertise in chronic infection–driven immune activation and high-dimensional immune profiling, paired with genomics of clonal evolution.</p>
+    <p><strong>Notes:</strong> Partner with hematology/oncology to link immune activation states and viral metrics to CHIP clones and cardiovascular/hematologic outcomes.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(11)">Copy team summary</button>
+    <div id="status-11" class="status"></div>
+  </div>
+
+  <!-- 12 -->
+  <div class="card opportunity-card" data-team-id="12" data-members="Landau, Duerr, Herati, Pironti">
+    <h3>12. NYU Center for AIDS Research (CFAR) Concept</h3>
+    <p><strong>Possible team members:</strong> Landau · Duerr · Herati · Pironti</p>
+    <div class="tag-row">
+      <span class="tag">HIV</span>
+      <span class="tag">Center grant</span>
+      <span class="tag">Translational research</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> PAR-26-056 – Centers for AIDS Research (CFAR, P30).</p>
+    <p><strong>Rationale:</strong> Existing strengths in HIV virology, vaccine/immunology, and data science are distributed across Microbiology and Medicine, fitting the CFAR “hub and spoke” model.</p>
+    <p><strong>Notes:</strong> This is a longer-term institutional goal; near-term projects can be positioned as building the scientific and cohort foundations for a future CFAR submission.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(12)">Copy team summary</button>
+    <div id="status-12" class="status"></div>
+  </div>
+
+  <!-- 13 -->
+  <div class="card opportunity-card" data-team-id="13" data-members="Ortigoza, tenOever, Duerr, Herati, Khanna, Rodriguez, Stapleford, Pironti, Shopsin, Weiser">
+    <h3>13. Specialized Node within an Infectious Diseases Clinical Trials Network</h3>
+    <p><strong>Possible team members:</strong> Ortigoza · tenOever · Duerr · Herati · Khanna · Rodriguez · Stapleford · Pironti · Shopsin · Weiser</p>
+    <div class="tag-row">
+      <span class="tag">Clinical trials</span>
+      <span class="tag">Infectious diseases</span>
+      <span class="tag">Respiratory viruses</span>
+      <span class="tag">AMR</span>
+      <span class="tag">Global pathogens</span>
+    </div>
+    <p><strong>Funding opportunity:</strong> RFA-AI-27-002 – Infectious Diseases Clinical Trials Network (IDCTN, NIAID, Forecast).</p>
+    <p><strong>Rationale:</strong> NYU can serve as a high-value scientific/clinical hub for respiratory virus, AMR, and parasitic disease trials by combining mechanistic depth with established clinical infrastructure.</p>
+    <p><strong>Notes:</strong> Emphasize unique strengths in programmable viral vectors, macrophage and tissue-resident immunity, and genomic surveillance, contributing as a specialized methodology or pathogen node within a larger network.</p>
+    <button class="copy-btn" onclick="copyTeamSummary(13)">Copy team summary</button>
+    <div id="status-13" class="status"></div>
+  </div>
+</section>
 
     <section id="team-builder" class="section-spacer">
       <div class="card">
@@ -481,6 +506,34 @@
       }).catch(() => {
         const status = document.getElementById('status-' + id);
         if (status) status.innerText = 'Unable to copy. Please copy manually.';
+      });
+    }
+
+    function filterTeamsByName() {
+      const input = document.getElementById('team-search-input');
+      if (!input) return;
+
+      const queryRaw = input.value.trim();
+      const cards = document.querySelectorAll('#teams .card[data-team-id]');
+      if (!cards.length) return;
+
+      if (!queryRaw) {
+        cards.forEach(card => {
+          card.style.display = '';
+        });
+        return;
+      }
+
+      const normalizedQuery = queryRaw.toLowerCase().replace(/\s+/g, '');
+      cards.forEach(card => {
+        const members = (card.getAttribute('data-members') || '')
+          .toLowerCase()
+          .replace(/\s+/g, '');
+        if (members.includes(normalizedQuery)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
       });
     }
 
