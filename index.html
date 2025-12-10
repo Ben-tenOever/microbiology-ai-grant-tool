@@ -42,6 +42,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      z-index: 10;
     }
 
     nav a {
@@ -67,6 +68,7 @@
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
       gap: 1.75rem;
+      margin-bottom: 2rem;
     }
 
     @media (max-width: 880px) {
@@ -124,6 +126,32 @@
       text-align: center;
     }
 
+    .section-spacer {
+      margin-top: 1.5rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .pill-list a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #faf7ff;
+      color: var(--nyu-purple);
+      white-space: nowrap;
+    }
+
+    .pill-list a:hover {
+      border-color: var(--nyu-purple);
+      background: rgba(79,44,133,0.05);
+    }
   </style>
 </head>
 
@@ -139,6 +167,8 @@
   <a href="faculty.html">Faculty profiles</a>
   <a href="microbiology_two_investigator_teams_cards.html">Pairs</a>
   <a href="microbiology_three_plus_teams_cards.html">Teams of three or more</a>
+  <a href="#resources">Resources and model systems</a>
+  <a href="#approaches">Experimental approaches</a>
 </nav>
 
 <main>
@@ -165,16 +195,94 @@
       <h2>Faculty profiles</h2>
       <p>
         A consolidated view of research areas, model systems, and experimental strengths across
-        the Department’s labs.
+        the Department labs.
       </p>
       <ul>
-        <li>Review your lab’s representation.</li>
+        <li>Review your lab representation.</li>
         <li>Identify natural collaborators.</li>
         <li>Explore individualized funding directions.</li>
       </ul>
       <div class="btn-row">
         <a class="btn primary" href="faculty.html">Go to faculty profiles</a>
       </div>
+    </div>
+  </section>
+
+  <section id="resources" class="card section-spacer">
+    <h2>Resources and model systems</h2>
+    <p>
+      Use these links to see which labs work with specific pathogens, model systems, or specialized resources.
+      Each item takes you to the faculty profiles page, where the relevant investigators are highlighted in their
+      expanded research overview.
+    </p>
+
+    <h3>Viral and vector systems</h3>
+    <div class="pill-list">
+      <a href="faculty.html#resource-influenza">Influenza A and programmable RNA vectors</a>
+      <a href="faculty.html#resource-respiratory-viruses">Respiratory viral infection models in mice and lungs</a>
+      <a href="faculty.html#resource-herpesviruses">Herpesviruses including HSV and HCMV</a>
+      <a href="faculty.html#resource-hiv">HIV retroviruses and lentiviral vectors</a>
+      <a href="faculty.html#resource-arboviruses">Arboviruses including chikungunya and Mayaro</a>
+      <a href="faculty.html#resource-aav">AAV based immunoprophylaxis platforms</a>
+    </div>
+
+    <h3 class="section-spacer">Bacterial and parasitic systems</h3>
+    <div class="pill-list">
+      <a href="faculty.html#resource-staph">Staphylococcus aureus and MRSA models</a>
+      <a href="faculty.html#resource-enterobacter">Enterobacter and related hospital pathogens</a>
+      <a href="faculty.html#resource-mycobacteria">Mycobacterium tuberculosis and proteasome systems</a>
+      <a href="faculty.html#resource-gram-negative-envelope">Gram negative envelope stress and proteases</a>
+      <a href="faculty.html#resource-microbiome-strain-level">Microbiome and strain level genomics</a>
+    </div>
+
+    <h3 class="section-spacer">Immune and structural resources</h3>
+    <div class="pill-list">
+      <a href="faculty.html#resource-macrophages">Tissue resident and nerve associated macrophages</a>
+      <a href="faculty.html#resource-primary-human-immune">Primary human immune cell systems</a>
+      <a href="faculty.html#resource-humanized-mice">Humanized mouse models of infection</a>
+      <a href="faculty.html#resource-mosquito-vectors">Mosquito vectors for arbovirus research</a>
+      <a href="faculty.html#resource-structural-complexes">Purified host immune complexes for structural analysis</a>
+      <a href="faculty.html#resource-eggs-ferrets">Egg and ferret models for influenza work</a>
+    </div>
+  </section>
+
+  <section id="approaches" class="card section-spacer">
+    <h2>Experimental approaches</h2>
+    <p>
+      The Department spans a wide range of experimental platforms from structural biology to systems immunology
+      and synthetic virology. These links point to faculty who routinely use each approach.
+    </p>
+
+    <h3>Virus and vector engineering</h3>
+    <div class="pill-list">
+      <a href="faculty.html#approach-reverse-genetics">Reverse genetics and recombinant virus rescue</a>
+      <a href="faculty.html#approach-mirna-logic">miRNA logic and programmable attenuation</a>
+      <a href="faculty.html#approach-vector-engineering">Vector engineering for immunotherapy and delivery</a>
+      <a href="faculty.html#approach-aav-immunoprophylaxis">AAV based immunoprophylaxis</a>
+    </div>
+
+    <h3 class="section-spacer">Immunology and host response</h3>
+    <div class="pill-list">
+      <a href="faculty.html#approach-single-cell-immunity">Single cell and high dimensional immune profiling</a>
+      <a href="faculty.html#approach-macrophage-genetics">Conditional macrophage genetics and depletion</a>
+      <a href="faculty.html#approach-infection-models">Mouse and humanized infection models</a>
+    </div>
+
+    <h3 class="section-spacer">Genomics proteomics and structure</h3>
+    <div class="pill-list">
+      <a href="faculty.html#approach-whole-genome-sequencing">Whole genome sequencing and strain tracking</a>
+      <a href="faculty.html#approach-metagenomics">Metagenomics and microbiome analysis</a>
+      <a href="faculty.html#approach-chromatin-genomics">Chromatin and nuclear receptor genomics</a>
+      <a href="faculty.html#approach-cryo-em">Cryo EM for immune and pathogen complexes</a>
+      <a href="faculty.html#approach-proteomics-proteostasis">Proteomics and proteostasis assays</a>
+    </div>
+
+    <h3 class="section-spacer">Translation and RNA biology</h3>
+    <div class="pill-list">
+      <a href="faculty.html#approach-polysome-profiling">Polysome profiling and translational control</a>
+      <a href="faculty.html#approach-rna-decay">RNA decay and single molecule RNA enzyme assays</a>
+      <a href="faculty.html#approach-epitranscriptomics">Epitranscriptomic and RNA modification assays</a>
+      <a href="faculty.html#approach-transcriptomics">Bulk and single cell transcriptomics in infection</a>
     </div>
   </section>
 
