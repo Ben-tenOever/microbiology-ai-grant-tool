@@ -1,359 +1,1033 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>NYU Microbiology Faculty</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>NYU Microbiology Faculty Profiles</title>
   <style>
-    :root {
-      --nyu-purple: #57068c;
-      --nyu-light-purple: #f5f0ff;
-      --card-border: #e0e0e0;
-      --text-main: #222222;
-      --text-muted: #555555;
-      --bg: #ffffff;
-    }
-    * {
-      box-sizing: border-box;
-    }
     body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background-color: var(--bg);
-      color: var(--text-main);
-      line-height: 1.5;
+      background-color: #f5f5f7;
+      color: #222;
     }
     header {
-      background: linear-gradient(135deg, var(--nyu-purple), #8b5fbf);
+      background: linear-gradient(90deg, #410093, #5f2ca1);
       color: white;
-      padding: 24px 16px;
-      text-align: center;
+      padding: 1.5rem 2rem;
     }
     header h1 {
-      margin: 0 0 4px 0;
+      margin: 0 0 0.25rem 0;
       font-size: 1.8rem;
-      letter-spacing: 0.03em;
     }
     header p {
-      margin: 0;
-      font-size: 0.98rem;
+      margin: 0.1rem 0;
       opacity: 0.9;
     }
     main {
-      max-width: 1100px;
+      padding: 1.5rem 2rem 3rem;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 20px 16px 40px 16px;
     }
-    .search-bar {
-      margin-bottom: 20px;
-      position: sticky;
-      top: 0;
-      background-color: var(--bg);
-      padding: 10px 0 14px 0;
-      z-index: 5;
+    .search-box {
+      margin: 1rem 0 2rem;
     }
-    .search-bar label {
+    .search-box label {
       display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
     }
-    #searchInput {
+    .search-box input {
       width: 100%;
-      padding: 10px 12px;
-      font-size: 0.95rem;
+      max-width: 480px;
+      padding: 0.5rem 0.75rem;
       border-radius: 999px;
-      border: 1px solid var(--card-border);
-      outline: none;
-      box-shadow: 0 0 0 0 rgba(87, 6, 140, 0);
-      transition: box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-    #searchInput:focus {
-      border-color: var(--nyu-purple);
-      box-shadow: 0 0 0 2px rgba(87, 6, 140, 0.18);
-    }
-    .section-title {
-      margin: 22px 0 10px 0;
-      font-size: 1.1rem;
-      color: var(--nyu-purple);
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 4px;
-    }
-    .faculty-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
-    }
-    @media (min-width: 850px) {
-      .faculty-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
     }
     .faculty-card {
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 14px 14px 10px 14px;
-      background-color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-      transition: box-shadow 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
-    }
-    .faculty-card:hover {
-      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-      transform: translateY(-1px);
-      border-color: rgba(87, 6, 140, 0.35);
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      border: 1px solid #e4e4ea;
     }
     .faculty-card h2 {
-      margin: 0 0 4px 0;
-      font-size: 1.05rem;
-      color: var(--nyu-purple);
+      margin-top: 0;
+      margin-bottom: 0.25rem;
+      font-size: 1.25rem;
+      color: #2c2273;
     }
     .nyu-class {
-      margin: 0 0 8px 0;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #555;
     }
     .faculty-card p {
-      margin: 4px 0;
-      font-size: 0.86rem;
+      margin: 0.25rem 0;
+      line-height: 1.4;
+      font-size: 0.9rem;
     }
-    .faculty-card p strong {
-      font-weight: 600;
-      color: #333333;
+    .faculty-card strong {
+      color: #333;
     }
     details {
-      margin-top: 4px;
-      font-size: 0.84rem;
+      margin-top: 0.5rem;
+      font-size: 0.88rem;
     }
     details summary {
       cursor: pointer;
-      list-style: none;
-      outline: none;
-    }
-    details summary::-webkit-details-marker {
-      display: none;
-    }
-    details summary::before {
-      content: "▸ ";
-      font-size: 0.75rem;
-      display: inline-block;
-      transform: translateY(-0.5px);
-      color: var(--nyu-purple);
-    }
-    details[open] summary::before {
-      content: "▾ ";
+      color: #2c2273;
     }
     details ul {
-      padding-left: 16px;
-      margin: 4px 0 6px 0;
+      margin-top: 0.4rem;
+      padding-left: 1.1rem;
     }
-    details li {
-      margin-bottom: 2px;
-    }
-    .pill-row {
-      margin-top: 6px;
-      font-size: 0.78rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .pill {
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(87, 6, 140, 0.18);
-      background-color: var(--nyu-light-purple);
-      color: var(--nyu-purple);
-      white-space: nowrap;
-    }
-    .hidden {
-      display: none !important;
-    }
-    .no-results {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      display: none;
+    @media (max-width: 720px) {
+      main {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Microbiology Faculty Map</h1>
-    <p>Interactive overview of core Microbiology faculty and affiliated investigators across NYU Grossman School of Medicine</p>
+    <h1>NYU Microbiology &amp; Affiliates &mdash; Faculty Profiles</h1>
+    <p>Structured research profiles used for AI-assisted collaboration discovery and grant matching.</p>
+    <p style="font-size:0.85rem; opacity:0.85;">Prototype &middot; For internal departmental use.</p>
   </header>
   <main>
-    <section class="search-bar">
-      <label for="searchInput">Search by name, topic, method, or disease area</label>
-      <input id="searchInput" type="text" placeholder="Examples bacteriophage, influenza, spatial transcriptomics, macrophages, prostate cancer, lupus">
-      <div id="noResults" class="no-results">No matches found for this search.</div>
+    <section class="search-box">
+      <label for="searchInput">Quick search by name, pathogen, method, or topic:</label>
+      <input id="searchInput" type="search" placeholder="e.g., influenza, macrophages, AMR, single-cell, EVLP..." />
     </section>
 
-    <h2 class="section-title">Core Microbiology Faculty</h2>
-    <section class="faculty-grid" id="coreFaculty">
-
-      <article class="faculty-card">
-        <h2>Joel Belasco PhD</h2>
-        <p class="nyu-class">Bacteriology
-        <br>Post transcriptional gene control
-        <br>RNA biology</p>
-        <p><strong>Specialty areas</strong> RNA stability and decay in bacteria, post transcriptional regulation, mRNA structure function, small RNA control of gene expression</p>
-        <p><strong>Lab synopsis</strong> The Belasco lab dissects how RNA structure and RNA binding factors control the stability and translation of bacterial mRNAs. Using biochemical, genetic, and structural approaches they define how ribonucleases, small RNAs, and RNA protein complexes tune bacterial gene expression to respond to stress, nutrient availability, and host environments. These principles form the conceptual foundation for manipulating microbial gene expression in infection, microbiome engineering, and synthetic biology.</p>
-        <p><strong>Research keywords</strong> mRNA turnover, RNA structure, endoribonucleases, small RNAs, stress responses, translational control, synthetic gene circuits in bacteria</p>
-        <p><strong>Experimental capabilities</strong> Bacterial genetics and strain engineering, RNA biochemistry and footprinting, quantitative measurements of mRNA half life and translation, transcriptomics and ribosome profiling, in vitro reconstitution of RNA protein complexes</p>
-        <p><strong>Complementary areas</strong> Synthetic biology and microbial circuit design, antimicrobial target discovery, host pathogen interactions where bacterial stress responses determine outcome</p>
-        <p><strong>Model systems and disease focus</strong> Gram negative and Gram positive bacterial models of stress adaptation, with applications to infection biology and microbiome engineering</p>
-        <details>
-          <summary><strong>Example grant directions for this PI</strong></summary>
-          <ul>
-            <li>NIAID and NIGMS programs focused on bacterial gene regulation and RNA biology</li>
-            <li>Synthetic biology initiatives that require rational control of microbial gene expression</li>
-            <li>Collaborations on antibiotic tolerance and persistence that hinge on stress induced RNA programs</li>
-          </ul>
-        </details>
-        <div class="pill-row">
-          <div class="pill">RNA decay</div>
-          <div class="pill">Post transcriptional control</div>
-          <div class="pill">Bacterial genetics</div>
-        </div>
-      </article>
-
-      <article class="faculty-card">
-        <h2>Andrew J Darwin PhD</h2>
-        <p class="nyu-class">Bacteriology
-        <br>Envelope stress and secretion</p>
-        <p><strong>Specialty areas</strong> Bacterial envelope stress responses, protein translocation systems, secretion associated virulence</p>
-        <p><strong>Lab synopsis</strong> The Andrew Darwin lab studies how Gram negative bacteria sense and respond to damage at the cell envelope. They focus especially on the phage shock protein system and related pathways that monitor outer membrane integrity during infection, antibiotic exposure, and host immune attack. By defining the molecular logic of these stress responses they reveal vulnerabilities that can be targeted to sensitize pathogens to host defense or antimicrobial therapy.</p>
-        <p><strong>Research keywords</strong> Envelope stress signaling, phage shock protein system, secretion machinery, outer membrane biogenesis, virulence regulation</p>
-        <p><strong>Experimental capabilities</strong> Classical and modern bacterial genetics, protein localization and topology mapping, membrane protein biochemistry, infection relevant stress models, fluorescence based reporters of envelope damage</p>
-        <p><strong>Complementary areas</strong> Antimicrobial resistance and tolerance programs, innate immune sensing of envelope damage, combinations with host directed therapies that disrupt bacterial envelopes</p>
-        <p><strong>Model systems and disease focus</strong> Gram negative pathogens including Yersinia and Pseudomonas models of systemic and respiratory infection</p>
-        <details>
-          <summary><strong>Example grant directions for this PI</strong></summary>
-          <ul>
-            <li>NIAID mechanisms focused on bacterial virulence and stress responses</li>
-            <li>Cross department efforts on antimicrobial resistance and host directed therapeutics</li>
-          </ul>
-        </details>
-        <div class="pill-row">
-          <div class="pill">Envelope stress</div>
-          <div class="pill">Secretion</div>
-          <div class="pill">Gram negative pathogens</div>
-        </div>
-      </article>
-
-      <article class="faculty-card">
-        <h2>K Heran Darwin PhD</h2>
-        <p class="nyu-class">Bacteriology
-        <br>Mycobacteria and proteasomes</p>
-        <p><strong>Specialty areas</strong> Mycobacterium tuberculosis pathogenesis, bacterial proteasomes, persistence and host immune evasion</p>
-        <p><strong>Lab synopsis</strong> The Heran Darwin lab investigates how the mycobacterial proteasome and associated protein quality control pathways shape tuberculosis virulence and persistence. They use genetics and chemical biology to define how selective protein degradation allows M tuberculosis to withstand host derived stresses, including reactive nitrogen species and nutrient limitation, and to establish chronic infection.</p>
-        <p><strong>Research keywords</strong> Mycobacterial proteasome, protein degradation, stress adaptation, chronic infection, tuberculosis immunology</p>
-        <p><strong>Experimental capabilities</strong> BSL3 mycobacterial culture and genetics, infection models of TB, proteomics of ubiquitin like modifications, small molecule targeting of bacterial proteasomes, host pathogen interaction assays</p>
-        <p><strong>Complementary areas</strong> Global health focused TB therapeutics, innate immune sensing of bacterial metabolic stress, host directed therapies that interface with mycobacterial quality control pathways</p>
-        <p><strong>Model systems and disease focus</strong> Mycobacterium tuberculosis infection models ranging from in vitro macrophages to murine and other in vivo systems of pulmonary TB</p>
-        <details>
-          <summary><strong>Example grant directions for this PI</strong></summary>
-          <ul>
-            <li>NIAID programs in tuberculosis pathogenesis and therapeutics</li>
-            <li>Global health foundations focused on TB drug discovery and resistance</li>
-          </ul>
-        </details>
-        <div class="pill-row">
-          <div class="pill">Tuberculosis</div>
-          <div class="pill">Proteasome biology</div>
-          <div class="pill">Chronic infection</div>
-        </div>
-      </article>
-
-      <article class="faculty-card">
-        <h2>Mark Garabedian PhD</h2>
-        <p class="nyu-class">Oncogenesis
-        <br>Nuclear receptor signaling</p>
-        <p><strong>Specialty areas</strong> Nuclear receptor biology, androgen receptor and other steroid receptors, transcriptional control in cancer especially prostate</p>
-        <p><strong>Lab synopsis</strong> The Garabedian lab explores how nuclear receptors interpret hormonal and environmental signals to reprogram gene expression in cancer. They focus particularly on androgen receptor signaling in prostate cancer and how crosstalk between nuclear receptors and chromatin regulators drives tumor progression, therapy resistance, and lineage plasticity. Their work links fundamental receptor biology to biomarker and drug development.</p>
-        <p><strong>Research keywords</strong> Nuclear receptors, androgen receptor, chromatin remodeling, transcription complexes, hormone driven cancer, therapy resistance</p>
-        <p><strong>Experimental capabilities</strong> Cancer cell line and organoid models, CRISPR based genomic editing, ChIP and chromatin profiling, transcriptional and epigenomic analysis, high content imaging, functional screens for nuclear receptor modulators</p>
-        <p><strong>Complementary areas</strong> Prostate and other hormone driven malignancies, inflammation and nuclear receptor crosstalk, systems level analysis of tumor microenvironments where hormones intersect with immunity</p>
-        <p><strong>Model systems and disease focus</strong> Prostate cancer models including androgen sensitive and castration resistant states with opportunities for cross talk with immunology and infection focused projects</p>
-        <details>
-          <summary><strong>Example grant directions for this PI</strong></summary>
-          <ul>
-            <li>NCI programs in nuclear receptor signaling and hormone driven cancers</li>
-            <li>Collaborative projects on immunotherapy resistance that involves nuclear receptor pathways</li>
-          </ul>
-        </details>
-        <div class="pill-row">
-          <div class="pill">Prostate cancer</div>
-          <div class="pill">Nuclear receptors</div>
-          <div class="pill">Chromatin</div>
-        </div>
-      </article>
-
-      <article class="faculty-card">
-        <h2>Kamal Khanna PhD</h2>
-        <p class="nyu-class">Immunology
-        <br>Tissue resident T cells
-        <br>Mucosal immunity</p>
-        <p><strong>Specialty areas</strong> Tissue resident and mucosal T cell biology, immune memory in barrier tissues, infection and inflammation in the lung and gut</p>
-        <p><strong>Lab synopsis</strong> The Khanna lab defines how tissue resident T cells and other lymphocyte populations are established, maintained, and recalled in barrier sites such as the lung and intestine. They integrate infection models, fate mapping, and single cell profiling to reveal how local cues imprint long lived immune memory and how these programs are altered in chronic inflammation and aging.</p>
-        <p><strong>Research keywords</strong> Tissue resident memory T cells, mucosal immunity, lung and gut infection, immune memory imprinting, aging, barrier immunology</p>
-        <p><strong>Experimental capabilities</strong> Murine models of respiratory and enteric infection, advanced flow cytometry and spectral cytometry, fate mapping and reporter mice, tissue imaging, single cell transcriptomics of immune populations</p>
-        <p><strong>Complementary areas</strong> Viral and bacterial infection models in the lung and intestine, vaccine design that targets tissue resident memory, inflammatory and fibrotic lung disease including post viral sequelae</p>
-        <p><strong>Model systems and disease focus</strong> Mouse models of acute and chronic infection at mucosal surfaces with links to human tissue studies through collaborations</p>
-        <details>
-          <summary><strong>Example grant directions for this PI</strong></summary>
-          <ul>
-            <li>NIAID programs on tissue resident immunity and host protection at barrier sites</li>
-            <li>Multi project grants on lung inflammation, including RESPOND style efforts</li>
-          </ul>
-        </details>
-        <div class="pill-row">
-          <div class="pill">Tissue resident T cells</div>
-          <div class="pill">Lung immunity</div>
-          <div class="pill">Mucosal infection</div>
-        </div>
-      </article]
-
-      <!-- The rest of the file would continue here, but due to length limits I have to stop -->
-
+    
+    <section class="faculty-card" data-search="Joel G. Belasco, PhD Bacteriology
+Post-transcriptional and Translational Research RNA Biology / mRNA Decay / Epitranscriptomics The Belasco Lab investigates the mechanisms of mRNA decay and RNA modification in bacteria and mammals, focusing on how molecular interactions at the 5′ end and along the transcript body determine mRNA stability and epitranscriptomic modification. The lab’s pioneering studies have defined fundamental principles of bacterial mRNA decay, including the discovery of the 5′-end-dependent mRNA degradation pathway and the identification of novel bacterial RNA caps—such as glucose and nucleoside-tetraphosphate (Np₄) caps—that modulate transcript stability. Using a combination of biochemical reconstitution and single-molecule imaging, the lab has shown that RNase E scans RNA by one-dimensional diffusion, with obstacles such as proteins, ribosomes, or structured RNA elements hindering cleavage and stabilizing transcripts. Collectively, these studies reveal universal mechanisms linking RNA structure, enzymology, and environmental stress to post-transcriptional gene regulation across domains of life. Current efforts center on uncovering new types of RNA 5′-end modifications, defining their biosynthetic origins and regulatory consequences, and exploring whether analogous decay and capping mechanisms operate in mammalian systems. Bacterial mRNA decay mechanisms, including 5′-end-dependent degradation.
+Role of RNA pyrophosphohydrolase (RppH) in initiating decay.
+RNase E one-dimensional diffusion and its regulation by RNA structure and bound obstacles.
+Epitranscriptomic RNA regulation via noncanonical Np₄ and glucose caps that stabilize transcripts.
+Dinucleoside tetraphosphate (Np₄A) alarmones as stress-responsive RNA caps influencing gene expression.
+Single-molecule and biochemical studies of RNA–protein interactions governing decay.
+Comparative insights into mammalian RNA decay driven by microRNAs and AU-rich elements. RNA extraction, synthesis, and structure analysis; RNA half-life determination and decay kinetics in vivo and in vitro; Electrophoresis (northern blotting, PAGE, agarose, and boronate gels); Protein purification and enzyme activity assays; Size-exclusion chromatography with multi-angle light scattering (SEC-MALS); Plasmid cloning and bacterial strain construction (P1 transduction, recombineering); Site-specific RNA cleavage by deoxyribozymes; Single-molecule FRET for RNA–protein interaction dynamics; PCR, RT-PCR, RLM-RACE, primer extension, and TLC; RNA-seq and transcriptome analysis; Western blotting; Biochemical reconstitution of RNA decay pathways and RNA–protein complexes. RNA in cancer (Schneider)
+Post-transcriptional regulation (Mohr)
+Stress responses (Heran Darwin, Andrew Darwin, Rodriguez, Mohr) Model systems: Escherichia coli and mammalian cells.
+Focus area: Mechanisms of mRNA decay, RNA capping, and epitranscriptomic regulation.
+Disease relevance: Fundamental processes underlying bacterial stress adaptation and post-transcriptional regulation relevant to infection and human RNA metabolism.">
+      <h2>Joel G. Belasco, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Post-transcriptional and Translational Research</p>
+      <p><strong>Specialty areas:</strong> RNA Biology / mRNA Decay / Epitranscriptomics</p>
+      <p><strong>Lab synopsis:</strong> The Belasco Lab investigates the mechanisms of mRNA decay and RNA modification in bacteria and mammals, focusing on how molecular interactions at the 5′ end and along the transcript body determine mRNA stability and epitranscriptomic modification. The lab’s pioneering studies have defined fundamental principles of bacterial mRNA decay, including the discovery of the 5′-end-dependent mRNA degradation pathway and the identification of novel bacterial RNA caps—such as glucose and nucleoside-tetraphosphate (Np₄) caps—that modulate transcript stability. Using a combination of biochemical reconstitution and single-molecule imaging, the lab has shown that RNase E scans RNA by one-dimensional diffusion, with obstacles such as proteins, ribosomes, or structured RNA elements hindering cleavage and stabilizing transcripts. Collectively, these studies reveal universal mechanisms linking RNA structure, enzymology, and environmental stress to post-transcriptional gene regulation across domains of life. Current efforts center on uncovering new types of RNA 5′-end modifications, defining their biosynthetic origins and regulatory consequences, and exploring whether analogous decay and capping mechanisms operate in mammalian systems.</p>
+      <p><strong>Research keywords:</strong> Bacterial mRNA decay mechanisms, including 5′-end-dependent degradation.
+Role of RNA pyrophosphohydrolase (RppH) in initiating decay.
+RNase E one-dimensional diffusion and its regulation by RNA structure and bound obstacles.
+Epitranscriptomic RNA regulation via noncanonical Np₄ and glucose caps that stabilize transcripts.
+Dinucleoside tetraphosphate (Np₄A) alarmones as stress-responsive RNA caps influencing gene expression.
+Single-molecule and biochemical studies of RNA–protein interactions governing decay.
+Comparative insights into mammalian RNA decay driven by microRNAs and AU-rich elements.</p>
+      <p><strong>Experimental capabilities:</strong> RNA extraction, synthesis, and structure analysis; RNA half-life determination and decay kinetics in vivo and in vitro; Electrophoresis (northern blotting, PAGE, agarose, and boronate gels); Protein purification and enzyme activity assays; Size-exclusion chromatography with multi-angle light scattering (SEC-MALS); Plasmid cloning and bacterial strain construction (P1 transduction, recombineering); Site-specific RNA cleavage by deoxyribozymes; Single-molecule FRET for RNA–protein interaction dynamics; PCR, RT-PCR, RLM-RACE, primer extension, and TLC; RNA-seq and transcriptome analysis; Western blotting; Biochemical reconstitution of RNA decay pathways and RNA–protein complexes.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> RNA in cancer (Schneider)
+Post-transcriptional regulation (Mohr)
+Stress responses (Heran Darwin, Andrew Darwin, Rodriguez, Mohr)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Escherichia coli and mammalian cells.
+Focus area: Mechanisms of mRNA decay, RNA capping, and epitranscriptomic regulation.
+Disease relevance: Fundamental processes underlying bacterial stress adaptation and post-transcriptional regulation relevant to infection and human RNA metabolism.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Structure-guided design of vaccines, biologics, or small molecules (NIGMS/NIAID structural biology R01s).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
     </section>
+    
+
+    <section class="faculty-card" data-search="Andrew J. Darwin, PhD Bacteriology
+Drivers of Microbial Pathogenesis Bacteriology / Stress Responses / Cell Envelope Physiology The Darwin Lab investigates the physiology of the Pseudomonas aeruginosa cell envelope, with emphasis on stress responses, carboxyl-terminal processing proteases, and mechanisms regulating autolysins involved in peptidoglycan remodeling. The lab’s work has defined how the LbcA•CtpA proteolytic complex maintains cell envelope integrity by degrading specific peptidoglycan hydrolases that are essential for cell wall expansion and morphogenesis. Through genetic, biochemical, and structural studies, the lab has revealed that CtpA forms a hexameric complex activated by its lipoprotein partner LbcA, a mechanism distinct from the analogous E. coli NlpI•Prc system. These studies have uncovered a broader network of envelope proteases and regulatory proteins, including inhibitor/anti-inhibitor systems (e.g., IltA/LiiA) that fine-tune the activity of lytic transglycosylases. Collectively, this work defines fundamental principles of bacterial envelope homeostasis and provides insight into the growth-rate-dependent control of proteolysis, stress adaptation, and antibiotic resistance in P. aeruginosa. Current efforts focus on elucidating how envelope protease systems sense physiological stress, coordinate with phospholipid transport pathways, and modulate cell wall remodeling during infection and antibiotic challenge. Physiology of the Pseudomonas aeruginosa cell envelope.
+Bacterial stress responses and envelope stress pathways.
+Carboxyl-terminal processing proteases (CtpA, Prc) and their activation mechanisms.
+Regulation of autolysins and peptidoglycan hydrolases.
+Structure and function of the LbcA•CtpA proteolytic complex.
+Inhibitor/anti-inhibitor systems (IltA/LiiA) controlling lytic transglycosylases.
+Growth-rate-dependent control of envelope proteolysis.
+Comparative envelope regulation in P. aeruginosa and E. coli. Bacterial genetics (plasmid construction, chromosomal manipulations, random mutagenesis); Protein purification and in vitro enzyme activity assays; Immunoblotting and protein detection; Polyclonal antisera production (outsourced); Cryo-electron microscopy and X-ray crystallography (collaborative); Biochemical reconstitution of protease–adaptor complexes; Co-immunoprecipitation and mass spectrometry for substrate identification; Reporter gene assays (lacZ, fluorescent reporters); RNA and protein expression analysis; Peptidoglycan hydrolase activity and cell wall assays; Growth and stress response assays; Collaborative structural biology and biochemistry. Proteostasis (Heran Darwin); 
+Structural biology (Lee, Wilson, Schneider)
+Therapeutics for Gram-negative pathogens
+Stress responses (Heran Darwin, Belasco, Rodriguez, Mohr) Model systems: Pseudomonas aeruginosa, Escherichia coli
+Focus areas: Proteolytic control of cell envelope biogenesis; Envelope stress responses; Regulation of peptidoglycan hydrolases and virulence systems.
+Disease relevance: Mechanisms governing envelope integrity and antibiotic resistance in P. aeruginosa, a WHO “Priority 1: Critical” pathogen linked to hospital-acquired and chronic infections (e.g., cystic fibrosis lung disease).">
+      <h2>Andrew J. Darwin, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis</p>
+      <p><strong>Specialty areas:</strong> Bacteriology / Stress Responses / Cell Envelope Physiology</p>
+      <p><strong>Lab synopsis:</strong> The Darwin Lab investigates the physiology of the Pseudomonas aeruginosa cell envelope, with emphasis on stress responses, carboxyl-terminal processing proteases, and mechanisms regulating autolysins involved in peptidoglycan remodeling. The lab’s work has defined how the LbcA•CtpA proteolytic complex maintains cell envelope integrity by degrading specific peptidoglycan hydrolases that are essential for cell wall expansion and morphogenesis. Through genetic, biochemical, and structural studies, the lab has revealed that CtpA forms a hexameric complex activated by its lipoprotein partner LbcA, a mechanism distinct from the analogous E. coli NlpI•Prc system. These studies have uncovered a broader network of envelope proteases and regulatory proteins, including inhibitor/anti-inhibitor systems (e.g., IltA/LiiA) that fine-tune the activity of lytic transglycosylases. Collectively, this work defines fundamental principles of bacterial envelope homeostasis and provides insight into the growth-rate-dependent control of proteolysis, stress adaptation, and antibiotic resistance in P. aeruginosa. Current efforts focus on elucidating how envelope protease systems sense physiological stress, coordinate with phospholipid transport pathways, and modulate cell wall remodeling during infection and antibiotic challenge.</p>
+      <p><strong>Research keywords:</strong> Physiology of the Pseudomonas aeruginosa cell envelope.
+Bacterial stress responses and envelope stress pathways.
+Carboxyl-terminal processing proteases (CtpA, Prc) and their activation mechanisms.
+Regulation of autolysins and peptidoglycan hydrolases.
+Structure and function of the LbcA•CtpA proteolytic complex.
+Inhibitor/anti-inhibitor systems (IltA/LiiA) controlling lytic transglycosylases.
+Growth-rate-dependent control of envelope proteolysis.
+Comparative envelope regulation in P. aeruginosa and E. coli.</p>
+      <p><strong>Experimental capabilities:</strong> Bacterial genetics (plasmid construction, chromosomal manipulations, random mutagenesis); Protein purification and in vitro enzyme activity assays; Immunoblotting and protein detection; Polyclonal antisera production (outsourced); Cryo-electron microscopy and X-ray crystallography (collaborative); Biochemical reconstitution of protease–adaptor complexes; Co-immunoprecipitation and mass spectrometry for substrate identification; Reporter gene assays (lacZ, fluorescent reporters); RNA and protein expression analysis; Peptidoglycan hydrolase activity and cell wall assays; Growth and stress response assays; Collaborative structural biology and biochemistry.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Proteostasis (Heran Darwin); 
+Structural biology (Lee, Wilson, Schneider)
+Therapeutics for Gram-negative pathogens
+Stress responses (Heran Darwin, Belasco, Rodriguez, Mohr)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Pseudomonas aeruginosa, Escherichia coli
+Focus areas: Proteolytic control of cell envelope biogenesis; Envelope stress responses; Regulation of peptidoglycan hydrolases and virulence systems.
+Disease relevance: Mechanisms governing envelope integrity and antibiotic resistance in P. aeruginosa, a WHO “Priority 1: Critical” pathogen linked to hospital-acquired and chronic infections (e.g., cystic fibrosis lung disease).</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Structure-guided design of vaccines, biologics, or small molecules (NIGMS/NIAID structural biology R01s).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="K. Heran Darwin, PhD Bacteriology
+Drivers of Microbial Pathogenesis
+Post-transcriptional and Translational Research Bacteriology / Post-Translational Regulation / Proteostasis / Host-Pathogen Interactions The Darwin Lab investigates the biology and biochemistry of the mycobacterial Pup-proteasome system (PPS) and its regulated pathways, uncovering how this bacterial proteostasis network contributes to stress adaptation, metabolism, and virulence. The group studies protein quality control and proteasome-mediated degradation in Mycobacterium tuberculosis, with emphasis on how Pup modification and depupylation govern protein stability and stress responses. The lab’s pioneering work revealed that the Pup ligase PafA catalyzes substrate-to-substrate “transpupylation,” a mechanism distinct from eukaryotic ubiquitination. Subsequent studies identified Ruc, a redox-regulated molecular chaperone that protects M. tuberculosis from oxidative stress, and defined how the depupylase Dop controls substrate selectivity through a conserved catalytic loop. The group also showed that defective proteasomal degradation leads to aldehyde accumulation and hypersensitivity to nitric oxide and copper stress. Most recently, they discovered that CoaX, a pseudopantothenate kinase, links metabolic state to proteasome regulation by modulating Dop-mediated depupylation of PanB. Current efforts focus on defining how Pup-proteasome dynamics and redox-regulated chaperones coordinate bacterial stress adaptation, metabolic control, and persistence during infection. Biology and biochemistry of the mycobacterial Pup-proteasome system.
+Protein degradation and quality control in bacteria.
+Structure and regulation of PafA, Dop, and Pup-modified substrates.
+Redox-regulated chaperones and oxidative stress responses.
+Integration of proteostasis and metabolism via CoaX–PanB.
+Host–pathogen interactions in Mycobacterium tuberculosis survival and persistence.
+Proteostasis-driven immune evasion and stress tolerance.
+Evolutionary parallels to eukaryotic ubiquitin–proteasome systems. Bacterial genetics (gene deletion, complementation, mutagenesis); Protein purification and in vitro enzyme assays; Pupylation and depupylation reconstitution assays; Immunoblotting; Protein pull-down assays and substrate identification; Mouse infection models for Mycobacterium tuberculosis pathogenesis; Omics approaches (genomics, transcriptomics, proteomics); Mass spectrometry-based proteome analysis; RNA-Seq and stress-response profiling; Polyclonal antisera production (outsourced); Collaborative structural biology and biochemistry (cryo-EM, X-ray crystallography). Stress responses (Andrew Darwin, Belasco, Rodriguez, Mohr); 
+RNA biology (Belasco/Schneider); 
+Immunology (Khanna, Duerr, Herati); 
+Therapeutics (Garabedian/Schneider) Model systems: Mycobacterium tuberculosis (H37Rv, CDC1551) and Mycobacterium smegmatis as a genetic model.
+Focus areas: M. tuberculosis pathogenesis; Bacterial proteostasis and virulence; Mycobacterial proteasome biology; Pup-proteasome system regulation; Stress adaptation and metabolic integration during infection.
+Disease relevance: Understanding how proteostasis and redox-regulated degradation pathways enable M. tuberculosis to persist under host-imposed stresses, informing strategies to target proteasome function in tuberculosis therapy.">
+      <h2>K. Heran Darwin, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis<br>Post-transcriptional and Translational Research</p>
+      <p><strong>Specialty areas:</strong> Bacteriology / Post-Translational Regulation / Proteostasis / Host-Pathogen Interactions</p>
+      <p><strong>Lab synopsis:</strong> The Darwin Lab investigates the biology and biochemistry of the mycobacterial Pup-proteasome system (PPS) and its regulated pathways, uncovering how this bacterial proteostasis network contributes to stress adaptation, metabolism, and virulence. The group studies protein quality control and proteasome-mediated degradation in Mycobacterium tuberculosis, with emphasis on how Pup modification and depupylation govern protein stability and stress responses. The lab’s pioneering work revealed that the Pup ligase PafA catalyzes substrate-to-substrate “transpupylation,” a mechanism distinct from eukaryotic ubiquitination. Subsequent studies identified Ruc, a redox-regulated molecular chaperone that protects M. tuberculosis from oxidative stress, and defined how the depupylase Dop controls substrate selectivity through a conserved catalytic loop. The group also showed that defective proteasomal degradation leads to aldehyde accumulation and hypersensitivity to nitric oxide and copper stress. Most recently, they discovered that CoaX, a pseudopantothenate kinase, links metabolic state to proteasome regulation by modulating Dop-mediated depupylation of PanB. Current efforts focus on defining how Pup-proteasome dynamics and redox-regulated chaperones coordinate bacterial stress adaptation, metabolic control, and persistence during infection.</p>
+      <p><strong>Research keywords:</strong> Biology and biochemistry of the mycobacterial Pup-proteasome system.
+Protein degradation and quality control in bacteria.
+Structure and regulation of PafA, Dop, and Pup-modified substrates.
+Redox-regulated chaperones and oxidative stress responses.
+Integration of proteostasis and metabolism via CoaX–PanB.
+Host–pathogen interactions in Mycobacterium tuberculosis survival and persistence.
+Proteostasis-driven immune evasion and stress tolerance.
+Evolutionary parallels to eukaryotic ubiquitin–proteasome systems.</p>
+      <p><strong>Experimental capabilities:</strong> Bacterial genetics (gene deletion, complementation, mutagenesis); Protein purification and in vitro enzyme assays; Pupylation and depupylation reconstitution assays; Immunoblotting; Protein pull-down assays and substrate identification; Mouse infection models for Mycobacterium tuberculosis pathogenesis; Omics approaches (genomics, transcriptomics, proteomics); Mass spectrometry-based proteome analysis; RNA-Seq and stress-response profiling; Polyclonal antisera production (outsourced); Collaborative structural biology and biochemistry (cryo-EM, X-ray crystallography).</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Stress responses (Andrew Darwin, Belasco, Rodriguez, Mohr); 
+RNA biology (Belasco/Schneider); 
+Immunology (Khanna, Duerr, Herati); 
+Therapeutics (Garabedian/Schneider)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Mycobacterium tuberculosis (H37Rv, CDC1551) and Mycobacterium smegmatis as a genetic model.
+Focus areas: M. tuberculosis pathogenesis; Bacterial proteostasis and virulence; Mycobacterial proteasome biology; Pup-proteasome system regulation; Stress adaptation and metabolic integration during infection.
+Disease relevance: Understanding how proteostasis and redox-regulated degradation pathways enable M. tuberculosis to persist under host-imposed stresses, informing strategies to target proteasome function in tuberculosis therapy.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Structure-guided design of vaccines, biologics, or small molecules (NIGMS/NIAID structural biology R01s).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Ralf Duerr, MD, PhD Virology
+Immunology
+Translational Research Viral Immunology / Vaccine Responses / Viral Evolution The Duerr Lab investigates immune responses to MPXV, SARS-CoV-2, Influenza, and HIV-1 through studies of viral evolution, vaccine- and infection-induced immunity, and host–pathogen interactions. The lab focuses on understanding how viral genetic variation and immune evasion shape antibody durability, neutralization breadth, and long-term protection. Using integrated approaches that combine genomic surveillance, viral evolution analysis, and immunologic profiling, the group defines the mechanisms by which vaccination and infection influence population-level immunity. Pioneering studies have characterized the emergence and dissemination of SARS-CoV-2 variants, provided the first systematic evaluation of MVA-BN (JYNNEOS) vaccine–induced immunity to mpox, and established standardized workflows for high-containment immune assays and biospecimen analysis. Current efforts center on identifying immune correlates of durable protection across orthopoxvirus and coronavirus lineages, and on developing next-generation tools to evaluate antibody quality, avidity, and cross-neutralization. Immune responses to MPXV, SARS-CoV-2, Influenza, and HIV-1.
+Comparative analysis of vaccine- versus infection-induced immunity.
+Viral evolution, immune escape, and antiretroviral resistance mechanisms.
+Genomic surveillance and variant tracking in emerging pathogens.
+Durability, quality, and avidity of antibody responses.
+Development and application of multiplex immunoassays for biomarker discovery.
+Integration of viral genomics with clinical and immunologic datasets to define correlates of protection. Multiplex antibody binding analysis; Antibody isotype and subclass profiling; Neutralization assays; Hemagglutination inhibition (HAI) assays; Avidity assessment; Biochemical crosslinking; Proteomics; Viral genome sequencing and evolution analysis; Bioinformatics and selective adaptation modeling; ELISA and flow-based antibody quantification; Memory B-cell and T-cell profiling; Omics approaches (genomics, transcriptomics, proteomics); Viral culture and neutralization in BSL-3 facilities; Phylogenetic and lineage tracking of emerging variants. T cell/antibody integration (Herati)
+Macrophage roles (Khanna)
+Vector/decoy studies (Landau)
+Biomarker discovery (Rodriguez) Model systems: Human cohorts infected with or vaccinated against MPXV (MVA-BN/JYNNEOS), SARS-CoV-2, Influenza, or HIV-1.
+Focus areas: Mechanisms of antiviral immune responses and viral evasion of vaccine-induced immunity; Orthopoxvirus (MPXV) immunology; SARS-CoV-2 and Long COVID immune dynamics; Influenza vaccine response durability; HIV-1 antibody evolution and escape.
+Disease relevance: Understanding how viral evolution, immune imprinting, and host variability shape the durability and breadth of vaccine- and infection-induced immunity, guiding design of next-generation pan-viral vaccines and immune monitoring tools.">
+      <h2>Ralf Duerr, MD, PhD</h2>
+      <p class="nyu-class">Virology<br>Immunology<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Viral Immunology / Vaccine Responses / Viral Evolution</p>
+      <p><strong>Lab synopsis:</strong> The Duerr Lab investigates immune responses to MPXV, SARS-CoV-2, Influenza, and HIV-1 through studies of viral evolution, vaccine- and infection-induced immunity, and host–pathogen interactions. The lab focuses on understanding how viral genetic variation and immune evasion shape antibody durability, neutralization breadth, and long-term protection. Using integrated approaches that combine genomic surveillance, viral evolution analysis, and immunologic profiling, the group defines the mechanisms by which vaccination and infection influence population-level immunity. Pioneering studies have characterized the emergence and dissemination of SARS-CoV-2 variants, provided the first systematic evaluation of MVA-BN (JYNNEOS) vaccine–induced immunity to mpox, and established standardized workflows for high-containment immune assays and biospecimen analysis. Current efforts center on identifying immune correlates of durable protection across orthopoxvirus and coronavirus lineages, and on developing next-generation tools to evaluate antibody quality, avidity, and cross-neutralization.</p>
+      <p><strong>Research keywords:</strong> Immune responses to MPXV, SARS-CoV-2, Influenza, and HIV-1.
+Comparative analysis of vaccine- versus infection-induced immunity.
+Viral evolution, immune escape, and antiretroviral resistance mechanisms.
+Genomic surveillance and variant tracking in emerging pathogens.
+Durability, quality, and avidity of antibody responses.
+Development and application of multiplex immunoassays for biomarker discovery.
+Integration of viral genomics with clinical and immunologic datasets to define correlates of protection.</p>
+      <p><strong>Experimental capabilities:</strong> Multiplex antibody binding analysis; Antibody isotype and subclass profiling; Neutralization assays; Hemagglutination inhibition (HAI) assays; Avidity assessment; Biochemical crosslinking; Proteomics; Viral genome sequencing and evolution analysis; Bioinformatics and selective adaptation modeling; ELISA and flow-based antibody quantification; Memory B-cell and T-cell profiling; Omics approaches (genomics, transcriptomics, proteomics); Viral culture and neutralization in BSL-3 facilities; Phylogenetic and lineage tracking of emerging variants.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> T cell/antibody integration (Herati)
+Macrophage roles (Khanna)
+Vector/decoy studies (Landau)
+Biomarker discovery (Rodriguez)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Human cohorts infected with or vaccinated against MPXV (MVA-BN/JYNNEOS), SARS-CoV-2, Influenza, or HIV-1.
+Focus areas: Mechanisms of antiviral immune responses and viral evasion of vaccine-induced immunity; Orthopoxvirus (MPXV) immunology; SARS-CoV-2 and Long COVID immune dynamics; Influenza vaccine response durability; HIV-1 antibody evolution and escape.
+Disease relevance: Understanding how viral evolution, immune imprinting, and host variability shape the durability and breadth of vaccine- and infection-induced immunity, guiding design of next-generation pan-viral vaccines and immune monitoring tools.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>HIV/retroviral pathogenesis &amp; cure strategies (NIAID HIV/AIDS research programs).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Michael J. Garabedian, PhD Bacteriology
+Epigenetic &amp; Cellular Signaling
+Immunology
+Post-transcriptional and Translational Research
+Translational Research Microbiology / Nuclear Receptor Signaling / Transcriptional Regulation / Chemical Biology / Translational Therapeutics The Garabedian Lab investigates how nuclear receptor signaling is regulated by post-translational modifications, cofactors, and synthetic ligands to control gene expression programs in health and disease. Current studies span cardiometabolic, neurological, laryngeal, and prostate systems, revealing how nuclear receptor phosphorylation and cofactor interactions reprogram transcriptional networks to drive inflammation, memory formation, fibrosis, and cancer progression. The group has defined key mechanisms by which the androgen receptor (AR) and glucocorticoid receptor (GR) integrate signaling cues from cofactors such as MED19 and ELK1 to control chromatin accessibility and transcriptional output in prostate cancer. Pioneering studies identified how phosphorylation of LXRα influences macrophage lipid metabolism and inflammation, and how selective glucocorticoid signaling modulates fibrotic remodeling in vocal fold fibroblast–macrophage co-cultures. Current efforts focus on dissecting receptor–cofactor interactions, post-translational receptor modification, and the discovery of small-molecule and peptoid modulators that fine-tune nuclear receptor activity across diverse tissues and disease contexts. Nuclear receptor regulation by post-translational modifications, cofactors, and ligands.
+Androgen receptor (AR) reprogramming in prostate cancer and response to peptoid therapeutics.
+Glucocorticoid signaling balance in fibroblast–macrophage interactions and vocal fold fibrosis.
+LXRα phosphorylation and inflammatory control in cardiometabolic disease and atherosclerosis.
+GR phosphorylation by BDNF in memory consolidation and stress response.
+Nuclear receptors as transcriptional hubs rewired by context, modification, and ligand binding.
+Cross-talk between AR, GR, and LXR pathways in cancer, metabolism, and inflammation. Human cell culture (prostate cancer cell lines, primary immune cells, fibroblasts); RNA-seq; qRT-PCR; ATAC-seq; ChIP-seq; histone modification profiling; Reporter gene assays; Immunoblotting; Receptor–ligand interaction and transcriptional activation assays; Co-immunoprecipitation (co-IP) and phospho-specific antibody assays; Peptoid synthesis and receptor-targeted conjugates; Protein purification and biochemical reconstitution; Animal models (genetically engineered mice: LXRα S196A, GR mutants, Ldlr−/−); Bone marrow transplantation into Ldlr−/− mice; Behavioral assays (rotarod, memory retention); Xenograft models of prostate cancer; Prostate organoid culture; Fibroblast–macrophage co-cultures; Histology and immunohistochemistry (IHC); Analysis of atherosclerotic plaques, adipose tissue, and fibrotic lesions; Cell proliferation, colony formation, and 3D spheroid assays; Metabolic and lipid profiling; Macropinocytosis assays; Immunopeptidomics; Mass spectrometry–based proteomics and post-translational modification analysis. Inflammation &amp; immunometabolism (Rodriguez)
+Multi‑omics integration (Schluter/Shenhav)
+Host–pathogen interactions (Weiser/Ratner) 
+Signal‑dependent transcription during infection (tenOever/Stapleford) Model systems: Prostate cancer cell lines, prostate organoids, primary immune cells, fibroblast–macrophage co-cultures, and genetically engineered mice (LXRα S196A, GR mutants, Ldlr−/−).
+Focus areas: Cardiometabolic disease (atherosclerosis, obesity, inflammation); Neurobiology of stress and memory; Translational laryngology (vocal fold fibrosis, voice disorders); Prostate cancer and therapy-resistant disease; Inflammation–metabolism axis.
+Disease relevance: Nuclear receptor–driven mechanisms linking hormonal, metabolic, and inflammatory signaling in cancer, cardiovascular disease, fibrosis, and neurobiology.">
+      <h2>Michael J. Garabedian, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Epigenetic &amp; Cellular Signaling<br>Immunology<br>Post-transcriptional and Translational Research<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Microbiology / Nuclear Receptor Signaling / Transcriptional Regulation / Chemical Biology / Translational Therapeutics</p>
+      <p><strong>Lab synopsis:</strong> The Garabedian Lab investigates how nuclear receptor signaling is regulated by post-translational modifications, cofactors, and synthetic ligands to control gene expression programs in health and disease. Current studies span cardiometabolic, neurological, laryngeal, and prostate systems, revealing how nuclear receptor phosphorylation and cofactor interactions reprogram transcriptional networks to drive inflammation, memory formation, fibrosis, and cancer progression. The group has defined key mechanisms by which the androgen receptor (AR) and glucocorticoid receptor (GR) integrate signaling cues from cofactors such as MED19 and ELK1 to control chromatin accessibility and transcriptional output in prostate cancer. Pioneering studies identified how phosphorylation of LXRα influences macrophage lipid metabolism and inflammation, and how selective glucocorticoid signaling modulates fibrotic remodeling in vocal fold fibroblast–macrophage co-cultures. Current efforts focus on dissecting receptor–cofactor interactions, post-translational receptor modification, and the discovery of small-molecule and peptoid modulators that fine-tune nuclear receptor activity across diverse tissues and disease contexts.</p>
+      <p><strong>Research keywords:</strong> Nuclear receptor regulation by post-translational modifications, cofactors, and ligands.
+Androgen receptor (AR) reprogramming in prostate cancer and response to peptoid therapeutics.
+Glucocorticoid signaling balance in fibroblast–macrophage interactions and vocal fold fibrosis.
+LXRα phosphorylation and inflammatory control in cardiometabolic disease and atherosclerosis.
+GR phosphorylation by BDNF in memory consolidation and stress response.
+Nuclear receptors as transcriptional hubs rewired by context, modification, and ligand binding.
+Cross-talk between AR, GR, and LXR pathways in cancer, metabolism, and inflammation.</p>
+      <p><strong>Experimental capabilities:</strong> Human cell culture (prostate cancer cell lines, primary immune cells, fibroblasts); RNA-seq; qRT-PCR; ATAC-seq; ChIP-seq; histone modification profiling; Reporter gene assays; Immunoblotting; Receptor–ligand interaction and transcriptional activation assays; Co-immunoprecipitation (co-IP) and phospho-specific antibody assays; Peptoid synthesis and receptor-targeted conjugates; Protein purification and biochemical reconstitution; Animal models (genetically engineered mice: LXRα S196A, GR mutants, Ldlr−/−); Bone marrow transplantation into Ldlr−/− mice; Behavioral assays (rotarod, memory retention); Xenograft models of prostate cancer; Prostate organoid culture; Fibroblast–macrophage co-cultures; Histology and immunohistochemistry (IHC); Analysis of atherosclerotic plaques, adipose tissue, and fibrotic lesions; Cell proliferation, colony formation, and 3D spheroid assays; Metabolic and lipid profiling; Macropinocytosis assays; Immunopeptidomics; Mass spectrometry–based proteomics and post-translational modification analysis.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Inflammation &amp; immunometabolism (Rodriguez)
+Multi‑omics integration (Schluter/Shenhav)
+Host–pathogen interactions (Weiser/Ratner) 
+Signal‑dependent transcription during infection (tenOever/Stapleford)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Prostate cancer cell lines, prostate organoids, primary immune cells, fibroblast–macrophage co-cultures, and genetically engineered mice (LXRα S196A, GR mutants, Ldlr−/−).
+Focus areas: Cardiometabolic disease (atherosclerosis, obesity, inflammation); Neurobiology of stress and memory; Translational laryngology (vocal fold fibrosis, voice disorders); Prostate cancer and therapy-resistant disease; Inflammation–metabolism axis.
+Disease relevance: Nuclear receptor–driven mechanisms linking hormonal, metabolic, and inflammatory signaling in cancer, cardiovascular disease, fibrosis, and neurobiology.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Cancer biology &amp; tumor microenvironment (NCI mechanistic R01s; immuno-oncology initiatives).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Ramin Herati, MD Immunology
+Translational Research Human Immunology / Systems Immunology / Vaccinology The Herati Lab investigates how T follicular helper (Tfh) and CD4⁺ T cells regulate antibody responses to vaccines, autoantigens, and xenoantigens, focusing on the cellular and molecular mechanisms that shape the quality, specificity, and durability of humoral immunity. Through studies of human vaccination, infection, and immunotherapy, the lab has revealed how inflammatory cues, checkpoint signaling, and immune history imprint Tfh and CD4⁺ T cell differentiation, influencing antibody evolution and long-term protection. Pioneering work from the group has identified circulating Tfh (cTfh) populations as biosensors of immune health, capable of predicting vaccine responsiveness and revealing systemic immune set points during checkpoint blockade or aging. Current efforts center on defining how immune-modifying therapies and chronic inflammation alter Tfh and CD4⁺ T cell function, with translational goals of improving vaccine design and mitigating immune dysregulation in infection, cancer, and autoimmunity. Role of T follicular helper (Tfh) and CD4⁺ T cells in shaping antibody responses.
+Regulation of humoral immunity in response to vaccines, autoantigens, and xenoantigens.
+Mechanisms of immune imprinting by inflammation, checkpoint signaling, and infection history.
+Systems-level integration of immune responses using multi-omics, single-cell, and spatial analyses.
+Comparative studies of vaccine- versus infection-induced antibody evolution.
+Immune modulation in autoimmunity, transplantation, and immunotherapy.
+Translational focus on improving vaccine design and preventing immune dysregulation. Flow cytometry and spectral immune profiling; Single-cell RNA sequencing (scRNA-seq); Multi-omics integration (genomics, transcriptomics, proteomics); Spatial omics for mapping immune architecture; Activation-induced marker (AIM) assays for Tfh and CD4⁺ T cells; B cell–Tfh co-culture and functional antibody assays; ELISpot and cytokine quantification; Neutralization and antibody binding assays; Longitudinal cohort immune monitoring; Computational immunology and systems-level data integration. Vaccine immune responses (Duerr)
+Innate-adaptive integration (Khanna)
+Data integration (Pironti/Schluter) Model systems: Human cohorts involving vaccination, infection, autoimmunity, transplantation, and checkpoint immunotherapy.
+Focus areas: Vaccine immunology; Autoimmunity; Transplantation immunity; Tfh–B cell coordination in antibody development; Immune imprinting by inflammation and therapy.
+Disease relevance: Defining mechanisms that shape protective and pathogenic antibody responses to inform improved vaccine design, immune monitoring, and interventions for immune-mediated disease.">
+      <h2>Ramin Herati, MD</h2>
+      <p class="nyu-class">Immunology<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Human Immunology / Systems Immunology / Vaccinology</p>
+      <p><strong>Lab synopsis:</strong> The Herati Lab investigates how T follicular helper (Tfh) and CD4⁺ T cells regulate antibody responses to vaccines, autoantigens, and xenoantigens, focusing on the cellular and molecular mechanisms that shape the quality, specificity, and durability of humoral immunity. Through studies of human vaccination, infection, and immunotherapy, the lab has revealed how inflammatory cues, checkpoint signaling, and immune history imprint Tfh and CD4⁺ T cell differentiation, influencing antibody evolution and long-term protection. Pioneering work from the group has identified circulating Tfh (cTfh) populations as biosensors of immune health, capable of predicting vaccine responsiveness and revealing systemic immune set points during checkpoint blockade or aging. Current efforts center on defining how immune-modifying therapies and chronic inflammation alter Tfh and CD4⁺ T cell function, with translational goals of improving vaccine design and mitigating immune dysregulation in infection, cancer, and autoimmunity.</p>
+      <p><strong>Research keywords:</strong> Role of T follicular helper (Tfh) and CD4⁺ T cells in shaping antibody responses.
+Regulation of humoral immunity in response to vaccines, autoantigens, and xenoantigens.
+Mechanisms of immune imprinting by inflammation, checkpoint signaling, and infection history.
+Systems-level integration of immune responses using multi-omics, single-cell, and spatial analyses.
+Comparative studies of vaccine- versus infection-induced antibody evolution.
+Immune modulation in autoimmunity, transplantation, and immunotherapy.
+Translational focus on improving vaccine design and preventing immune dysregulation.</p>
+      <p><strong>Experimental capabilities:</strong> Flow cytometry and spectral immune profiling; Single-cell RNA sequencing (scRNA-seq); Multi-omics integration (genomics, transcriptomics, proteomics); Spatial omics for mapping immune architecture; Activation-induced marker (AIM) assays for Tfh and CD4⁺ T cells; B cell–Tfh co-culture and functional antibody assays; ELISpot and cytokine quantification; Neutralization and antibody binding assays; Longitudinal cohort immune monitoring; Computational immunology and systems-level data integration.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Vaccine immune responses (Duerr)
+Innate-adaptive integration (Khanna)
+Data integration (Pironti/Schluter)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Human cohorts involving vaccination, infection, autoimmunity, transplantation, and checkpoint immunotherapy.
+Focus areas: Vaccine immunology; Autoimmunity; Transplantation immunity; Tfh–B cell coordination in antibody development; Immune imprinting by inflammation and therapy.
+Disease relevance: Defining mechanisms that shape protective and pathogenic antibody responses to inform improved vaccine design, immune monitoring, and interventions for immune-mediated disease.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Kamal M. Khanna, PhD Bacteriology
+Immunology
+Parasitology
+Virology Immunology / Macrophage Biology / Respiratory Immunity / Tumor Immunology The Khanna Lab investigates how the immune system orchestrates protection against infections and cancer, with an emphasis on the behavior and regulation of myeloid cells across lymphoid and non-lymphoid tissues. The lab defines how tissue environments shape macrophage function across organs and how specialized macrophage subsets, such as Nerve- and Airway-Associated Interstitial Macrophages (NAMs), regulate pathogen clearance, inflammation resolution, tissue repair, and tumor immunity. Pioneering studies from the group identified NAMs as critical immunoregulatory sentinels in the lung and adipose tissue, orchestrating antiviral and anti-inflammatory responses via type I interferon and IL-10 signaling. More recent work revealed that CD169⁺ macrophages mediate communication between the nervous and immune systems, enabling systemic control of inflammation and disease tolerance. Current efforts aim to define the transcriptional, metabolic, and spatial cues that confer context-specific macrophage function and to harness these mechanisms for therapeutic modulation of infection, inflammation, and cancer. Biology and regulation of tissue myeloid cell subsets.
+Nerve- and Airway-Associated Interstitial Macrophages (NAMs) in type 2 immunity, asthma, fibrosis, and parasitic infection.
+Macrophage subset–specific roles in pathogen clearance and inflammation resolution during respiratory virus infection (influenza, SARS-CoV-2).
+Macrophage-mediated immunoregulation in systemic bacterial infections and sepsis.
+Tumor-associated macrophages (TAMs) in anti-tumor immunity and immune surveillance.
+Nanoparticle-based reprogramming of TAMs for cancer immunotherapy.
+Transcriptional, metabolic, and spatial regulation of macrophage identity across tissues. In vivo infection, autoimmunity, and cancer models (including transgenic and conditional knockout mice such as NAM-DTR and IFNAR-CKO); flow cytometry and multiparametric immune phenotyping; confocal and light-sheet microscopy (Zeiss LSM 780/880, Light Sheet Z.1); tissue clearing (CLARITY) and 3D image reconstruction; scRNA-seq, bulk RNA-seq, and ATAC-seq; single-cell multi-omics integration (transcriptomic, epitope, and chromatin accessibility by 10x Genomics TEA-seq); cytokine and chemokine profiling (Luminex, Bio-Plex); viral plaque assays and bacterial titer analysis; computational analysis pipelines using Seurat, Signac, and GraphPad Prism; spatial transcriptomics and image-based quantification of macrophage subsets across lung and lymphoid tissues. Viral immunity (Duerr)
+T follicular helper (Tfh)/CD4 cell-mediated regulation (Herati)
+Translational immunology (Ortigoza) Model systems: Mouse models of respiratory viral infection (influenza, SARS-CoV-2), asthma, fibrosis, bacterial sepsis, and cancer; transgenic and conditional knockout mice for macrophage subset analysis (NAM-DTR, CD169-DTR, IFNAR-CKO).
+Focus areas: Respiratory viral infections; Asthma and fibrosis; Systemic bacterial infection and sepsis; Cancer therapeutics; Tumor-associated macrophages (TAMs); Nerve- and Airway-Associated Interstitial Macrophages (NAMs).
+Disease relevance: Defining how distinct macrophage subsets coordinate immune defense, inflammation resolution, and tissue repair across infection, sepsis, and cancer to inform next-generation immunotherapies.">
+      <h2>Kamal M. Khanna, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Immunology<br>Parasitology<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Immunology / Macrophage Biology / Respiratory Immunity / Tumor Immunology</p>
+      <p><strong>Lab synopsis:</strong> The Khanna Lab investigates how the immune system orchestrates protection against infections and cancer, with an emphasis on the behavior and regulation of myeloid cells across lymphoid and non-lymphoid tissues. The lab defines how tissue environments shape macrophage function across organs and how specialized macrophage subsets, such as Nerve- and Airway-Associated Interstitial Macrophages (NAMs), regulate pathogen clearance, inflammation resolution, tissue repair, and tumor immunity. Pioneering studies from the group identified NAMs as critical immunoregulatory sentinels in the lung and adipose tissue, orchestrating antiviral and anti-inflammatory responses via type I interferon and IL-10 signaling. More recent work revealed that CD169⁺ macrophages mediate communication between the nervous and immune systems, enabling systemic control of inflammation and disease tolerance. Current efforts aim to define the transcriptional, metabolic, and spatial cues that confer context-specific macrophage function and to harness these mechanisms for therapeutic modulation of infection, inflammation, and cancer.</p>
+      <p><strong>Research keywords:</strong> Biology and regulation of tissue myeloid cell subsets.
+Nerve- and Airway-Associated Interstitial Macrophages (NAMs) in type 2 immunity, asthma, fibrosis, and parasitic infection.
+Macrophage subset–specific roles in pathogen clearance and inflammation resolution during respiratory virus infection (influenza, SARS-CoV-2).
+Macrophage-mediated immunoregulation in systemic bacterial infections and sepsis.
+Tumor-associated macrophages (TAMs) in anti-tumor immunity and immune surveillance.
+Nanoparticle-based reprogramming of TAMs for cancer immunotherapy.
+Transcriptional, metabolic, and spatial regulation of macrophage identity across tissues.</p>
+      <p><strong>Experimental capabilities:</strong> In vivo infection, autoimmunity, and cancer models (including transgenic and conditional knockout mice such as NAM-DTR and IFNAR-CKO); flow cytometry and multiparametric immune phenotyping; confocal and light-sheet microscopy (Zeiss LSM 780/880, Light Sheet Z.1); tissue clearing (CLARITY) and 3D image reconstruction; scRNA-seq, bulk RNA-seq, and ATAC-seq; single-cell multi-omics integration (transcriptomic, epitope, and chromatin accessibility by 10x Genomics TEA-seq); cytokine and chemokine profiling (Luminex, Bio-Plex); viral plaque assays and bacterial titer analysis; computational analysis pipelines using Seurat, Signac, and GraphPad Prism; spatial transcriptomics and image-based quantification of macrophage subsets across lung and lymphoid tissues.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Viral immunity (Duerr)
+T follicular helper (Tfh)/CD4 cell-mediated regulation (Herati)
+Translational immunology (Ortigoza)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Mouse models of respiratory viral infection (influenza, SARS-CoV-2), asthma, fibrosis, bacterial sepsis, and cancer; transgenic and conditional knockout mice for macrophage subset analysis (NAM-DTR, CD169-DTR, IFNAR-CKO).
+Focus areas: Respiratory viral infections; Asthma and fibrosis; Systemic bacterial infection and sepsis; Cancer therapeutics; Tumor-associated macrophages (TAMs); Nerve- and Airway-Associated Interstitial Macrophages (NAMs).
+Disease relevance: Defining how distinct macrophage subsets coordinate immune defense, inflammation resolution, and tissue repair across infection, sepsis, and cancer to inform next-generation immunotherapies.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Cancer biology &amp; tumor microenvironment (NCI mechanistic R01s; immuno-oncology initiatives).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Nathaniel R. Landau, PhD Immunology
+Virology Retrovirology / Immunology / Gene Therapy The Landau Lab investigates the molecular mechanisms of viral entry, restriction, and immune evasion, and develops gene therapy strategies using lentiviral and AAV vectors to engineer immunity against HIV, SARS-CoV-2, and cancer. The lab focuses on genetically modifying dendritic cells to enhance antiviral and antitumor immune responses and on creating Fc-fused soluble receptor “decoys” that neutralize SARS-CoV-2, either through direct delivery or via lentiviral and AAV vectors. Pioneering studies have defined the role of host restriction factors (APOBEC3, SAMHD1, MX2) in HIV-1 replication and identified ACE2-based receptor decoys capable of broadly neutralizing SARS-CoV-2 variants and preventing infection in animal models. Current efforts focus on optimizing vector-based delivery platforms for receptor decoys and immune modulators, expanding these strategies to other emerging viral pathogens and solid tumors, and defining how engineered dendritic cells can orchestrate durable, protective immunity. Immune response to HIV-1, SARS-CoV-2, and tumors.
+Dendritic cell engineering using HIV-1–based lentiviral vectors.
+Development of soluble receptor Fc-fusion decoys against SARS-CoV-2.
+Lentiviral and AAV vector-based vaccines and therapeutics.
+Mechanisms of viral entry, restriction, and immune evasion.
+Host–virus interactions driving viral evolution and cross-species transmission.
+Translational virology and gene therapy–based immunoprophylaxis. BSL-3 viral culture and infection models (HIV-1, SARS-CoV-2); Transfection to generate lentiviral and AAV vectors; Vector production, purification, and titration; RT-qPCR viral load measurement; Flow cytometry for immune cell phenotyping and infection analysis; Infection and genetic modification of dendritic cells with lentiviral vectors; Neutralization and receptor–virus binding assays; Protein expression, purification, and Fc-fusion receptor engineering; ELISA and antibody quantification; Mouse models for injection and tracking of engineered dendritic cells; Immunohistochemistry and tissue viral burden analysis; Bioinformatics for viral evolution and vector optimization. Translational virology (Ortigoza)
+Receptor-based therapies (Garabedian) Model systems: HIV-1 and SARS-CoV-2 infection models; lentiviral and AAV vector platforms; dendritic cell (DC) engineering and transduction assays; mouse models for in vivo delivery of engineered immune cells and receptor decoys.
+Focus areas: HIV-1; SARS-CoV-2; Lentiviral and AAV vectors; Cancer immunotherapy via dendritic cell (DC) engineering; Viral entry, immune evasion, and gene therapy–based immunoprophylaxis.
+Disease relevance: Developing gene and cell therapy strategies that harness immune engineering and receptor-based therapeutics to prevent or treat viral infection and cancer.">
+      <h2>Nathaniel R. Landau, PhD</h2>
+      <p class="nyu-class">Immunology<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Retrovirology / Immunology / Gene Therapy</p>
+      <p><strong>Lab synopsis:</strong> The Landau Lab investigates the molecular mechanisms of viral entry, restriction, and immune evasion, and develops gene therapy strategies using lentiviral and AAV vectors to engineer immunity against HIV, SARS-CoV-2, and cancer. The lab focuses on genetically modifying dendritic cells to enhance antiviral and antitumor immune responses and on creating Fc-fused soluble receptor “decoys” that neutralize SARS-CoV-2, either through direct delivery or via lentiviral and AAV vectors. Pioneering studies have defined the role of host restriction factors (APOBEC3, SAMHD1, MX2) in HIV-1 replication and identified ACE2-based receptor decoys capable of broadly neutralizing SARS-CoV-2 variants and preventing infection in animal models. Current efforts focus on optimizing vector-based delivery platforms for receptor decoys and immune modulators, expanding these strategies to other emerging viral pathogens and solid tumors, and defining how engineered dendritic cells can orchestrate durable, protective immunity.</p>
+      <p><strong>Research keywords:</strong> Immune response to HIV-1, SARS-CoV-2, and tumors.
+Dendritic cell engineering using HIV-1–based lentiviral vectors.
+Development of soluble receptor Fc-fusion decoys against SARS-CoV-2.
+Lentiviral and AAV vector-based vaccines and therapeutics.
+Mechanisms of viral entry, restriction, and immune evasion.
+Host–virus interactions driving viral evolution and cross-species transmission.
+Translational virology and gene therapy–based immunoprophylaxis.</p>
+      <p><strong>Experimental capabilities:</strong> BSL-3 viral culture and infection models (HIV-1, SARS-CoV-2); Transfection to generate lentiviral and AAV vectors; Vector production, purification, and titration; RT-qPCR viral load measurement; Flow cytometry for immune cell phenotyping and infection analysis; Infection and genetic modification of dendritic cells with lentiviral vectors; Neutralization and receptor–virus binding assays; Protein expression, purification, and Fc-fusion receptor engineering; ELISA and antibody quantification; Mouse models for injection and tracking of engineered dendritic cells; Immunohistochemistry and tissue viral burden analysis; Bioinformatics for viral evolution and vector optimization.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Translational virology (Ortigoza)
+Receptor-based therapies (Garabedian)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: HIV-1 and SARS-CoV-2 infection models; lentiviral and AAV vector platforms; dendritic cell (DC) engineering and transduction assays; mouse models for in vivo delivery of engineered immune cells and receptor decoys.
+Focus areas: HIV-1; SARS-CoV-2; Lentiviral and AAV vectors; Cancer immunotherapy via dendritic cell (DC) engineering; Viral entry, immune evasion, and gene therapy–based immunoprophylaxis.
+Disease relevance: Developing gene and cell therapy strategies that harness immune engineering and receptor-based therapeutics to prevent or treat viral infection and cancer.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>HIV/retroviral pathogenesis &amp; cure strategies (NIAID HIV/AIDS research programs).</li><li>Cancer biology &amp; tumor microenvironment (NCI mechanistic R01s; immuno-oncology initiatives).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="James Lee, PhD Virology
+Immunology
+Drivers of Microbial Pathogenesis Structural Biology / Host-Pathogen Interactions The Lee Lab investigates the structural mechanisms of peptide and protein transport across biological membranes, with emphasis on antigen processing by the transporter associated with antigen processing (TAP) and bacterial ABC transporter systems involved in secretion and virulence. The lab also defines the structural basis of host–pathogen interactions, focusing on membrane proteins critical for infection and immune defense. Using cryo-electron microscopy (cryo-EM), X-ray crystallography, and biochemical reconstitution, the group dissects how substrate recognition, conformational cycling, and ATP hydrolysis drive peptide translocation and quality control. These studies have revealed fundamental principles of transporter selectivity, gating, and allosteric regulation that underlie both immune surveillance and bacterial pathogenicity. Current efforts focus on mapping transport intermediate states and substrate-specific dynamics across eukaryotic and prokaryotic systems to identify generalizable rules of membrane transport and inform the development of transporter-targeted therapeutics. Structural biology of host–pathogen interactions.
+Membrane protein biology in infection and immunity.
+Structure and mechanism of antigen processing by TAP.
+Bacterial ABC transporters in secretion and virulence.
+Cryo-EM and biophysical analysis of membrane transport systems.
+Substrate recognition, conformational dynamics, and energy coupling in transporters.
+Linking structural insights to therapeutic opportunities. Protein purification; Structural biology; Cryo-electron microscopy (cryo-EM); X-ray crystallography; Membrane protein analysis and reconstitution; Biochemistry and enzymatic assays; Flow cytometry; Cell culture (bacterial, insect, mammalian); Molecular cloning and site-directed mutagenesis; Western blotting; Proteoliposome transport and ATPase assays; Crosslinking and mass spectrometry; Molecular dynamics simulations; Data processing and model refinement (cryoSPARC, RELION, Phenix). RNA-protein interactions (Wilson/Mohr); 
+Structural co-factor studies (Garabedian) Model systems: Transporter associated with antigen processing (TAP); Bacterial ABC transporters; Host–pathogen membrane protein complexes; Reconstituted proteoliposomes and cryo-EM structural models.
+Focus areas: Protein complexes in infection; Membrane proteins in immune signaling; Antigen processing and presentation; ABC transporter mechanisms; Structural basis of host–pathogen interactions.
+Disease relevance: Elucidating molecular mechanisms of infection and immune defense to guide structure-based design of immunomodulatory and antimicrobial therapeutics.">
+      <h2>James Lee, PhD</h2>
+      <p class="nyu-class">Virology<br>Immunology<br>Drivers of Microbial Pathogenesis</p>
+      <p><strong>Specialty areas:</strong> Structural Biology / Host-Pathogen Interactions</p>
+      <p><strong>Lab synopsis:</strong> The Lee Lab investigates the structural mechanisms of peptide and protein transport across biological membranes, with emphasis on antigen processing by the transporter associated with antigen processing (TAP) and bacterial ABC transporter systems involved in secretion and virulence. The lab also defines the structural basis of host–pathogen interactions, focusing on membrane proteins critical for infection and immune defense. Using cryo-electron microscopy (cryo-EM), X-ray crystallography, and biochemical reconstitution, the group dissects how substrate recognition, conformational cycling, and ATP hydrolysis drive peptide translocation and quality control. These studies have revealed fundamental principles of transporter selectivity, gating, and allosteric regulation that underlie both immune surveillance and bacterial pathogenicity. Current efforts focus on mapping transport intermediate states and substrate-specific dynamics across eukaryotic and prokaryotic systems to identify generalizable rules of membrane transport and inform the development of transporter-targeted therapeutics.</p>
+      <p><strong>Research keywords:</strong> Structural biology of host–pathogen interactions.
+Membrane protein biology in infection and immunity.
+Structure and mechanism of antigen processing by TAP.
+Bacterial ABC transporters in secretion and virulence.
+Cryo-EM and biophysical analysis of membrane transport systems.
+Substrate recognition, conformational dynamics, and energy coupling in transporters.
+Linking structural insights to therapeutic opportunities.</p>
+      <p><strong>Experimental capabilities:</strong> Protein purification; Structural biology; Cryo-electron microscopy (cryo-EM); X-ray crystallography; Membrane protein analysis and reconstitution; Biochemistry and enzymatic assays; Flow cytometry; Cell culture (bacterial, insect, mammalian); Molecular cloning and site-directed mutagenesis; Western blotting; Proteoliposome transport and ATPase assays; Crosslinking and mass spectrometry; Molecular dynamics simulations; Data processing and model refinement (cryoSPARC, RELION, Phenix).</p>
+      <p><strong>Complementary areas (AI-identified):</strong> RNA-protein interactions (Wilson/Mohr); 
+Structural co-factor studies (Garabedian)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Transporter associated with antigen processing (TAP); Bacterial ABC transporters; Host–pathogen membrane protein complexes; Reconstituted proteoliposomes and cryo-EM structural models.
+Focus areas: Protein complexes in infection; Membrane proteins in immune signaling; Antigen processing and presentation; ABC transporter mechanisms; Structural basis of host–pathogen interactions.
+Disease relevance: Elucidating molecular mechanisms of infection and immune defense to guide structure-based design of immunomodulatory and antimicrobial therapeutics.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Structure-guided design of vaccines, biologics, or small molecules (NIGMS/NIAID structural biology R01s).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Ian J. Mohr, PhD Post-transcriptional and Translational Research
+Virology Virology / Post-Transcriptional Gene Regulation / Stress Responses / RNA Biology The Mohr Lab investigates post-transcriptional regulation of gene expression under physiological stress using viral infection models, with a focus on RNA modification, ribosome biogenesis, and signaling pathways that control viral replication, host responses, and latency. The group defines how viruses—particularly herpesviruses—reprogram host RNA metabolism and translation to favor infection, evade immune defenses, and adapt to cellular stress. Their studies revealed that RNA m⁶A modification enzymes (e.g., METTL14, ALKBH5) regulate interferon-β expression during cytomegalovirus infection and DNA sensing, and that HSV-1 VP22 acts as a ribosome-associated factor maintaining translation under ribosomal stress. Using single-cell and multi-omic analyses, the lab also uncovered neuronal determinants such as Gadd45b that regulate HSV-1 latency and reactivation. Current efforts focus on defining how viral infection exploits and remodels RNA modification, translational control, and stress response networks to influence viral persistence, immune evasion, and cell fate. Post-transcriptional regulation of gene expression during viral infection and cellular stress.
+Host–virus competition for protein synthesis and control of translation initiation.
+RNA chemical modifications (m⁶A and related marks) regulating viral and host gene expression.
+Ribosome biology and translational control in infection and stress adaptation.
+Viral manipulation of RNA metabolism, ribosome biogenesis, and stress response signaling.
+Mechanisms of herpes simplex virus (HSV) latency and reactivation in neurons regulated by neurotrophic signaling and DNA damage responses.
+Systems-level dissection of RNA–protein networks governing viral persistence and immune evasion. Protein synthesis assays; Analysis of m⁶A RNA modification enzymes; RNA-seq; Ribosome profiling; Polysome profiling; Imaging (confocal, fluorescence, and live-cell); Immunoblotting; Mass spectrometry; Virus infection and latency models (HSV, cytomegalovirus); Neuronal culture and differentiation; Reporter-based translation and stress assays; Single-cell transcriptomics and epigenetic profiling; CRISPR-based genetic manipulation; Analysis of signaling pathways controlling translation and stress responses. Translation in cancer (Schneider)
+RNA decay (Belasco)
+RNA processing (Wilson)
+Stress response (Rodriguez) Model systems: Herpes simplex virus (HSV) latency and reactivation models; Cytomegalovirus infection; Neuronal culture systems; Cellular stress and translation regulation assays.
+Focus areas: Herpes simplex viruses; RNA modifications and ribosome biology in viral infection; Stress responses and post-transcriptional gene regulation; Host–virus competition for translation; Cellular signaling pathways controlling viral persistence and immune evasion.
+Disease relevance: Understanding how viruses exploit RNA metabolism and stress response networks to regulate infection, latency, and immune defense, informing strategies for antiviral and neuroprotective therapeutics.">
+      <h2>Ian J. Mohr, PhD</h2>
+      <p class="nyu-class">Post-transcriptional and Translational Research<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Virology / Post-Transcriptional Gene Regulation / Stress Responses / RNA Biology</p>
+      <p><strong>Lab synopsis:</strong> The Mohr Lab investigates post-transcriptional regulation of gene expression under physiological stress using viral infection models, with a focus on RNA modification, ribosome biogenesis, and signaling pathways that control viral replication, host responses, and latency. The group defines how viruses—particularly herpesviruses—reprogram host RNA metabolism and translation to favor infection, evade immune defenses, and adapt to cellular stress. Their studies revealed that RNA m⁶A modification enzymes (e.g., METTL14, ALKBH5) regulate interferon-β expression during cytomegalovirus infection and DNA sensing, and that HSV-1 VP22 acts as a ribosome-associated factor maintaining translation under ribosomal stress. Using single-cell and multi-omic analyses, the lab also uncovered neuronal determinants such as Gadd45b that regulate HSV-1 latency and reactivation. Current efforts focus on defining how viral infection exploits and remodels RNA modification, translational control, and stress response networks to influence viral persistence, immune evasion, and cell fate.</p>
+      <p><strong>Research keywords:</strong> Post-transcriptional regulation of gene expression during viral infection and cellular stress.
+Host–virus competition for protein synthesis and control of translation initiation.
+RNA chemical modifications (m⁶A and related marks) regulating viral and host gene expression.
+Ribosome biology and translational control in infection and stress adaptation.
+Viral manipulation of RNA metabolism, ribosome biogenesis, and stress response signaling.
+Mechanisms of herpes simplex virus (HSV) latency and reactivation in neurons regulated by neurotrophic signaling and DNA damage responses.
+Systems-level dissection of RNA–protein networks governing viral persistence and immune evasion.</p>
+      <p><strong>Experimental capabilities:</strong> Protein synthesis assays; Analysis of m⁶A RNA modification enzymes; RNA-seq; Ribosome profiling; Polysome profiling; Imaging (confocal, fluorescence, and live-cell); Immunoblotting; Mass spectrometry; Virus infection and latency models (HSV, cytomegalovirus); Neuronal culture and differentiation; Reporter-based translation and stress assays; Single-cell transcriptomics and epigenetic profiling; CRISPR-based genetic manipulation; Analysis of signaling pathways controlling translation and stress responses.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Translation in cancer (Schneider)
+RNA decay (Belasco)
+RNA processing (Wilson)
+Stress response (Rodriguez)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Herpes simplex virus (HSV) latency and reactivation models; Cytomegalovirus infection; Neuronal culture systems; Cellular stress and translation regulation assays.
+Focus areas: Herpes simplex viruses; RNA modifications and ribosome biology in viral infection; Stress responses and post-transcriptional gene regulation; Host–virus competition for translation; Cellular signaling pathways controlling viral persistence and immune evasion.
+Disease relevance: Understanding how viruses exploit RNA metabolism and stress response networks to regulate infection, latency, and immune defense, informing strategies for antiviral and neuroprotective therapeutics.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Mila B. Ortigoza, MD, PhD Translational Research
+Virology Translational Virology / Clinical Infectious Diseases / Host–Pathogen Immunology The Ortigoza Lab investigates host and viral determinants of respiratory-virus transmission and pathogenesis to define how viral and host factors govern viral shedding, spread, and persistence. The lab has developed and optimized neonatal mouse models of influenza A, SARS-CoV-2, and bacterial pathogens to study host-to-host respiratory transmission, providing a tractable platform for dissecting both pathogen-driven and host-mediated mechanisms of contagion. These animal models are complemented by primary human cell and tissue systems to assess findings in clinically relevant contexts. Using these integrated approaches, the group demonstrated that infant mice express both α2,3- and α2,6-linked sialic acids in the upper respiratory tract, and that selective removal of these receptors with a broadly acting neuraminidase suppressed viral shedding and blocked influenza transmission. Additional work showed that host age, immune status, and viral strain influence transmission efficiency. Current research aims to define the molecular and immunologic features that determine infectiousness and susceptibility, map the upper-airway receptor and innate-immune landscape, and apply these insights to develop host-targeted and mucosal interventions that strengthen pandemic preparedness and prevent respiratory-virus spread. Human immune responses to viral infection, including influenza and SARS-CoV-2.
+Mechanisms of respiratory-virus pathogenesis, transmission, and persistence.
+Host and viral determinants of infectiousness, susceptibility, and mucosal immunity.
+Sialic-acid receptor biology and airway innate-immune regulation.
+COVID-19 immune correlates, including acute and long COVID, and antiviral therapy development.
+Integration of clinical cohorts with mechanistic and translational virology studies.
+Development and evaluation of antiviral and host-directed therapeutics in preclinical and clinical models. Human cohort studies and clinical sample analysis; Primary human airway and tissue models; Neonatal and adult mouse infection and transmission models; Virology methods (viral culture, plaque assays, neutralization); Sialic-acid mapping and histological analysis; Immunofluorescence and confocal imaging; Immune profiling (flow cytometry, cytokine assays, serology); Transcriptomics (bulk and single-cell RNA-seq); Quantitative RT-PCR and viral load assessment; Host–pathogen interaction and mucosal immunity assays; Integration of clinical trials with preclinical antiviral evaluation. Immune profiling (Duerr/Herati)
+Viral infection models (Stapleford/Landau)
+Therapeutics (Schneider) Model systems: Neonatal and adult mouse models of influenza A and SARS-CoV-2 transmission; Primary human airway epithelial and respiratory tissue cultures; Clinical cohorts for acute and post-acute COVID-19.
+Focus areas: Influenza transmission; COVID-19 and Long COVID; Respiratory virus therapeutics; Host and viral determinants of infectiousness and susceptibility; Mucosal immunity and sialic-acid receptor biology; Translational strategies to strengthen pandemic preparedness.
+Disease relevance: Influenza A, SARS-CoV-2, and emerging respiratory viral infections.">
+      <h2>Mila B. Ortigoza, MD, PhD</h2>
+      <p class="nyu-class">Translational Research<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Translational Virology / Clinical Infectious Diseases / Host–Pathogen Immunology</p>
+      <p><strong>Lab synopsis:</strong> The Ortigoza Lab investigates host and viral determinants of respiratory-virus transmission and pathogenesis to define how viral and host factors govern viral shedding, spread, and persistence. The lab has developed and optimized neonatal mouse models of influenza A, SARS-CoV-2, and bacterial pathogens to study host-to-host respiratory transmission, providing a tractable platform for dissecting both pathogen-driven and host-mediated mechanisms of contagion. These animal models are complemented by primary human cell and tissue systems to assess findings in clinically relevant contexts. Using these integrated approaches, the group demonstrated that infant mice express both α2,3- and α2,6-linked sialic acids in the upper respiratory tract, and that selective removal of these receptors with a broadly acting neuraminidase suppressed viral shedding and blocked influenza transmission. Additional work showed that host age, immune status, and viral strain influence transmission efficiency. Current research aims to define the molecular and immunologic features that determine infectiousness and susceptibility, map the upper-airway receptor and innate-immune landscape, and apply these insights to develop host-targeted and mucosal interventions that strengthen pandemic preparedness and prevent respiratory-virus spread.</p>
+      <p><strong>Research keywords:</strong> Human immune responses to viral infection, including influenza and SARS-CoV-2.
+Mechanisms of respiratory-virus pathogenesis, transmission, and persistence.
+Host and viral determinants of infectiousness, susceptibility, and mucosal immunity.
+Sialic-acid receptor biology and airway innate-immune regulation.
+COVID-19 immune correlates, including acute and long COVID, and antiviral therapy development.
+Integration of clinical cohorts with mechanistic and translational virology studies.
+Development and evaluation of antiviral and host-directed therapeutics in preclinical and clinical models.</p>
+      <p><strong>Experimental capabilities:</strong> Human cohort studies and clinical sample analysis; Primary human airway and tissue models; Neonatal and adult mouse infection and transmission models; Virology methods (viral culture, plaque assays, neutralization); Sialic-acid mapping and histological analysis; Immunofluorescence and confocal imaging; Immune profiling (flow cytometry, cytokine assays, serology); Transcriptomics (bulk and single-cell RNA-seq); Quantitative RT-PCR and viral load assessment; Host–pathogen interaction and mucosal immunity assays; Integration of clinical trials with preclinical antiviral evaluation.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Immune profiling (Duerr/Herati)
+Viral infection models (Stapleford/Landau)
+Therapeutics (Schneider)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Neonatal and adult mouse models of influenza A and SARS-CoV-2 transmission; Primary human airway epithelial and respiratory tissue cultures; Clinical cohorts for acute and post-acute COVID-19.
+Focus areas: Influenza transmission; COVID-19 and Long COVID; Respiratory virus therapeutics; Host and viral determinants of infectiousness and susceptibility; Mucosal immunity and sialic-acid receptor biology; Translational strategies to strengthen pandemic preparedness.
+Disease relevance: Influenza A, SARS-CoV-2, and emerging respiratory viral infections.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Pediatric infection, vaccination, and developmental immunity (NICHD/NIAID pediatric-focused opportunities).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Alejandro Pironti, PhD Bacteriology
+Drivers of Microbial Pathogenesis
+Systems Microbiology
+Translational Research
+Virology Microbial Genomics / Antimicrobial Resistance / Computational Biology The Pironti Lab investigates mechanisms of bacterial pathogenesis, antimicrobial resistance (AMR), and host–microbiome interactions, with a focus on how pathogens sense, respond to, and evade immune and antibiotic stress. The group integrates genomic, molecular, and computational approaches, including AI-driven analytics, to uncover how bacterial signaling networks and gene regulation drive adaptation and virulence. Using Staphylococcus aureus and Enterobacter hormaechei as model systems, the lab has defined how quorum sensing, redox signaling, and porin remodeling coordinate virulence and resistance trade-offs. Their studies revealed that the agr system protects S. aureus from oxidative attack by linking metabolism to ROS resilience, while porin loss in E. hormaechei confers carbapenem resistance at the expense of virulence. Complementary work leverages strain-level microbiome genomics to track bacterial evolution within complex host environments. Current efforts focus on integrating AMR genomics, metabolic signaling, and host–pathogen interaction data through computational and AI-guided frameworks to uncover mechanisms of bacterial persistence and therapeutic resistance. Genomic mechanisms of antimicrobial resistance (AMR) in bacterial pathogens.
+Virulence, quorum sensing, and immune evasion in S. aureus and E. hormaechei.
+Microbiome dynamics and host interactions in health and autoimmunity.
+AI and machine learning for predicting resistance, virulence, and microbiome function.
+Systems-level modeling of bacterial adaptation and persistence. Microbial and comparative genomics; RNA-seq; Phylogenetics; Prediction of gene function; Microbiome analysis and strain-level profiling; Computational molecular biology using machine learning and foundational AI models; Bacterial culture and infection assays; Antimicrobial resistance phenotyping; Genetic manipulation and mutagenesis; Host–pathogen interaction assays; Bioinformatics pipelines for genomic and transcriptomic data integration. Immunity (Duerr/Herati)
+Computational biology (Schluter)
+MRSA and hospital epidemiology (Shopsin) Model systems: Staphylococcus aureus and Enterobacter hormaechei infection and resistance models; Human microbiome datasets; Computational frameworks for bacterial genomics and host–microbiome analysis.
+Focus areas: Antimicrobial resistance (AMR); Bacterial virulence; Autoimmunity (lupus); Microbiome–host interactions; Pathogen adaptation under immune and antibiotic stress.
+Disease relevance: Understanding how bacterial evolution, signaling, and host–microbiome dynamics drive infection outcomes, antimicrobial resistance, and immune dysregulation.">
+      <h2>Alejandro Pironti, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis<br>Systems Microbiology<br>Translational Research<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Microbial Genomics / Antimicrobial Resistance / Computational Biology</p>
+      <p><strong>Lab synopsis:</strong> The Pironti Lab investigates mechanisms of bacterial pathogenesis, antimicrobial resistance (AMR), and host–microbiome interactions, with a focus on how pathogens sense, respond to, and evade immune and antibiotic stress. The group integrates genomic, molecular, and computational approaches, including AI-driven analytics, to uncover how bacterial signaling networks and gene regulation drive adaptation and virulence. Using Staphylococcus aureus and Enterobacter hormaechei as model systems, the lab has defined how quorum sensing, redox signaling, and porin remodeling coordinate virulence and resistance trade-offs. Their studies revealed that the agr system protects S. aureus from oxidative attack by linking metabolism to ROS resilience, while porin loss in E. hormaechei confers carbapenem resistance at the expense of virulence. Complementary work leverages strain-level microbiome genomics to track bacterial evolution within complex host environments. Current efforts focus on integrating AMR genomics, metabolic signaling, and host–pathogen interaction data through computational and AI-guided frameworks to uncover mechanisms of bacterial persistence and therapeutic resistance.</p>
+      <p><strong>Research keywords:</strong> Genomic mechanisms of antimicrobial resistance (AMR) in bacterial pathogens.
+Virulence, quorum sensing, and immune evasion in S. aureus and E. hormaechei.
+Microbiome dynamics and host interactions in health and autoimmunity.
+AI and machine learning for predicting resistance, virulence, and microbiome function.
+Systems-level modeling of bacterial adaptation and persistence.</p>
+      <p><strong>Experimental capabilities:</strong> Microbial and comparative genomics; RNA-seq; Phylogenetics; Prediction of gene function; Microbiome analysis and strain-level profiling; Computational molecular biology using machine learning and foundational AI models; Bacterial culture and infection assays; Antimicrobial resistance phenotyping; Genetic manipulation and mutagenesis; Host–pathogen interaction assays; Bioinformatics pipelines for genomic and transcriptomic data integration.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Immunity (Duerr/Herati)
+Computational biology (Schluter)
+MRSA and hospital epidemiology (Shopsin)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Staphylococcus aureus and Enterobacter hormaechei infection and resistance models; Human microbiome datasets; Computational frameworks for bacterial genomics and host–microbiome analysis.
+Focus areas: Antimicrobial resistance (AMR); Bacterial virulence; Autoimmunity (lupus); Microbiome–host interactions; Pathogen adaptation under immune and antibiotic stress.
+Disease relevance: Understanding how bacterial evolution, signaling, and host–microbiome dynamics drive infection outcomes, antimicrobial resistance, and immune dysregulation.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Microbiome–host interactions and systems immunology (NIAID/NIDDK microbiome and immune regulation initiatives).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Adam J. Ratner, MD Bacteriology
+Drivers of Microbial Pathogenesis
+Translational Research Bacteriology / Translational The Ratner Lab investigates the molecular and cellular mechanisms by which bacterial pathogens colonize, evade immunity, and cause disease in neonatal and pediatric hosts. Focusing on Group B Streptococcus (GBS) and Staphylococcus aureus, the lab integrates genetic, biochemical, and infection-model approaches to define how bacterial virulence factors—such as polysaccharide capsule, surface adhesins, and bicomponent leukocidins—govern mucosal colonization, immune evasion, and invasive infection. Using both murine and ex vivo human models, the group has demonstrated that capsule production enhances intestinal colonization and competitive fitness in GBS, and that leukocidin subunits such as HlgB drive erythrocyte binding and hemolysis in S. aureus. Current work combines mechanistic studies and population-based analysis of pediatric clinical isolates to identify molecular pathways that support bacterial persistence and antibiotic resistance. The lab uses genetic, cellular, and population-based approaches to study toxins, microbial virulence factors, and host–microbe interactions with the overarching goal of informing prevention and treatment strategies for vaccine-preventable and antibiotic-resistant infections in pediatric populations. Pediatric infectious diseases and neonatal immunity
+Bacterial–host interactions and immune evasion mechanisms
+Group B Streptococcus colonization and invasive disease
+Congenital and perinatal infections, including sepsis and RSV
+Molecular basis of antimicrobial resistance (AMR) in pediatric pathogens
+Translational strategies for prevention and treatment of vaccine-preventable infections Clinical and translational cohort studies; Biobanking and prospective pathogen surveillance; Pathogen diagnostics and antimicrobial resistance profiling; Host–pathogen immunology assays (serology, cytokine analysis, neutralization); Infection assays for bacterial and viral pathogens; Genetic and molecular analyses of virulence determinants; Vaccine response evaluations; IRB-enabled pediatric clinical trials and registries; Outcomes and implementation research; Translational models linking laboratory findings to clinical infection and prevention strategies. Respiratory disease pathogenesis (Weiser)
+AMR surveillance (Shopsin)
+Viral vaccines &amp; immunity (Landau/tenOever)
+Computational epidemiology &amp; microbiome in pediatrics (Schluter/Shenhav) Model systems: Murine models of neonatal intestinal GBS colonization and late-onset disease; in vivo and ex vivo S. aureus infection models; primary human epithelial and erythrocyte cultures.
+Focus areas: Neonatal sepsis and mucosal colonization; bacterial virulence and immune evasion; capsule-mediated colonization and serotype fitness; leukocidin-driven pathogenesis and nutrient acquisition; vaccine-preventable and antibiotic-resistant infections; translational vaccine and therapeutic development.
+Disease relevance: Group B Streptococcus late-onset infection, Staphylococcus aureus pathogenesis, pediatric hospital-acquired infections, and respiratory and community-acquired infections such as RSV.">
+      <h2>Adam J. Ratner, MD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Bacteriology / Translational</p>
+      <p><strong>Lab synopsis:</strong> The Ratner Lab investigates the molecular and cellular mechanisms by which bacterial pathogens colonize, evade immunity, and cause disease in neonatal and pediatric hosts. Focusing on Group B Streptococcus (GBS) and Staphylococcus aureus, the lab integrates genetic, biochemical, and infection-model approaches to define how bacterial virulence factors—such as polysaccharide capsule, surface adhesins, and bicomponent leukocidins—govern mucosal colonization, immune evasion, and invasive infection. Using both murine and ex vivo human models, the group has demonstrated that capsule production enhances intestinal colonization and competitive fitness in GBS, and that leukocidin subunits such as HlgB drive erythrocyte binding and hemolysis in S. aureus. Current work combines mechanistic studies and population-based analysis of pediatric clinical isolates to identify molecular pathways that support bacterial persistence and antibiotic resistance. The lab uses genetic, cellular, and population-based approaches to study toxins, microbial virulence factors, and host–microbe interactions with the overarching goal of informing prevention and treatment strategies for vaccine-preventable and antibiotic-resistant infections in pediatric populations.</p>
+      <p><strong>Research keywords:</strong> Pediatric infectious diseases and neonatal immunity
+Bacterial–host interactions and immune evasion mechanisms
+Group B Streptococcus colonization and invasive disease
+Congenital and perinatal infections, including sepsis and RSV
+Molecular basis of antimicrobial resistance (AMR) in pediatric pathogens
+Translational strategies for prevention and treatment of vaccine-preventable infections</p>
+      <p><strong>Experimental capabilities:</strong> Clinical and translational cohort studies; Biobanking and prospective pathogen surveillance; Pathogen diagnostics and antimicrobial resistance profiling; Host–pathogen immunology assays (serology, cytokine analysis, neutralization); Infection assays for bacterial and viral pathogens; Genetic and molecular analyses of virulence determinants; Vaccine response evaluations; IRB-enabled pediatric clinical trials and registries; Outcomes and implementation research; Translational models linking laboratory findings to clinical infection and prevention strategies.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Respiratory disease pathogenesis (Weiser)
+AMR surveillance (Shopsin)
+Viral vaccines &amp; immunity (Landau/tenOever)
+Computational epidemiology &amp; microbiome in pediatrics (Schluter/Shenhav)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Murine models of neonatal intestinal GBS colonization and late-onset disease; in vivo and ex vivo S. aureus infection models; primary human epithelial and erythrocyte cultures.
+Focus areas: Neonatal sepsis and mucosal colonization; bacterial virulence and immune evasion; capsule-mediated colonization and serotype fitness; leukocidin-driven pathogenesis and nutrient acquisition; vaccine-preventable and antibiotic-resistant infections; translational vaccine and therapeutic development.
+Disease relevance: Group B Streptococcus late-onset infection, Staphylococcus aureus pathogenesis, pediatric hospital-acquired infections, and respiratory and community-acquired infections such as RSV.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Pediatric infection, vaccination, and developmental immunity (NICHD/NIAID pediatric-focused opportunities).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Ana M. Rodriguez, PhD Drivers of Microbial Pathogenesis
+Epigenetic &amp; Cellular Signaling
+Immunology
+Parasitology
+Translational Research
+Vector-borne Diseases Parasitology / Malaria Pathogenesis / Host–Parasite Interactions The Rodriguez Lab investigates mechanisms of malaria pathogenesis and vascular inflammation to identify biomarkers and protective therapies. Research focuses on cerebral malaria and severe malarial anemia, defining how Plasmodium falciparum–infected erythrocytes trigger endothelial signaling and mitochondrial stress pathways that disrupt the blood–brain barrier. The lab uncovered roles for xanthine oxidase and autoimmune antibodies in mediating anemia and endothelial damage. Beyond malaria, the group identified IgA-driven autoimmunity and coagulation abnormalities in post-acute sequelae of SARS-CoV-2 infection (PASC), linking chronic respiratory symptoms to microvascular dysfunction. Current efforts focus on delineating how endothelial, metabolic, and immune responses interact across acute and post-acute infections to drive vascular pathology and to develop interventions that preserve barrier integrity and prevent severe disease. Malaria pathogenesis in cerebral malaria and severe anemia.
+Plasmodium falciparum–induced blood–brain barrier disruption.
+Hemozoin lipid–mediated mitochondrial stress.
+Protective pathways via inhibition of mitochondrial stress, purinergic receptors, and farnesylation.
+Biomarker discovery for cerebral malaria (RNA-seq, vascular profiling).
+Xanthine oxidase (XO)–driven oxidative stress in severe anemia.
+Polyreactive and autoimmune antibodies in anemia and parasite clearance.
+Host–parasite interactions and translational therapeutic development. xCELLigence endothelial barrier integrity assays; Endothelial cell and Plasmodium falciparum culture; Mouse malaria infection models; Fatty acid and mitochondrial stress analysis; Platelet and PBMC isolation and culture from human plasma; Erythrocyte viability and phagocytosis assays; Flow cytometry (FACS) for phosphatidylserine exposure and immune phenotyping; Xanthine oxidase (XO) activity assays; Oxidative stress, antibody, and coagulation measurements in plasma; RNA-seq for biomarker discovery; ELISA; ELISPOT; Western blotting. Immune response characterization (Khanna)
+Vector biology (Stapleford)
+Bioinformatics (Pironti)
+Biomarker discovery (Duerr)
+Stress Responses (Andrew Darwin, Heran Darwin, Belasco, Mohr) Model systems: Plasmodium falciparum culture and mouse models of malaria; Endothelial and erythrocyte co-culture systems; Human plasma and PBMC samples for biomarker and immune analysis.
+Focus areas: Malaria (P. falciparum); Cerebral malaria; Severe anemia; Endothelial and mitochondrial stress responses; Autoantibody- and XO-mediated vascular pathology.
+Disease relevance: Defining molecular and immune mechanisms driving vascular injury and anemia in malaria to identify biomarkers and develop protective therapeutic strategies.">
+      <h2>Ana M. Rodriguez, PhD</h2>
+      <p class="nyu-class">Drivers of Microbial Pathogenesis<br>Epigenetic &amp; Cellular Signaling<br>Immunology<br>Parasitology<br>Translational Research<br>Vector-borne Diseases</p>
+      <p><strong>Specialty areas:</strong> Parasitology / Malaria Pathogenesis / Host–Parasite Interactions</p>
+      <p><strong>Lab synopsis:</strong> The Rodriguez Lab investigates mechanisms of malaria pathogenesis and vascular inflammation to identify biomarkers and protective therapies. Research focuses on cerebral malaria and severe malarial anemia, defining how Plasmodium falciparum–infected erythrocytes trigger endothelial signaling and mitochondrial stress pathways that disrupt the blood–brain barrier. The lab uncovered roles for xanthine oxidase and autoimmune antibodies in mediating anemia and endothelial damage. Beyond malaria, the group identified IgA-driven autoimmunity and coagulation abnormalities in post-acute sequelae of SARS-CoV-2 infection (PASC), linking chronic respiratory symptoms to microvascular dysfunction. Current efforts focus on delineating how endothelial, metabolic, and immune responses interact across acute and post-acute infections to drive vascular pathology and to develop interventions that preserve barrier integrity and prevent severe disease.</p>
+      <p><strong>Research keywords:</strong> Malaria pathogenesis in cerebral malaria and severe anemia.
+Plasmodium falciparum–induced blood–brain barrier disruption.
+Hemozoin lipid–mediated mitochondrial stress.
+Protective pathways via inhibition of mitochondrial stress, purinergic receptors, and farnesylation.
+Biomarker discovery for cerebral malaria (RNA-seq, vascular profiling).
+Xanthine oxidase (XO)–driven oxidative stress in severe anemia.
+Polyreactive and autoimmune antibodies in anemia and parasite clearance.
+Host–parasite interactions and translational therapeutic development.</p>
+      <p><strong>Experimental capabilities:</strong> xCELLigence endothelial barrier integrity assays; Endothelial cell and Plasmodium falciparum culture; Mouse malaria infection models; Fatty acid and mitochondrial stress analysis; Platelet and PBMC isolation and culture from human plasma; Erythrocyte viability and phagocytosis assays; Flow cytometry (FACS) for phosphatidylserine exposure and immune phenotyping; Xanthine oxidase (XO) activity assays; Oxidative stress, antibody, and coagulation measurements in plasma; RNA-seq for biomarker discovery; ELISA; ELISPOT; Western blotting.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Immune response characterization (Khanna)
+Vector biology (Stapleford)
+Bioinformatics (Pironti)
+Biomarker discovery (Duerr)
+Stress Responses (Andrew Darwin, Heran Darwin, Belasco, Mohr)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Plasmodium falciparum culture and mouse models of malaria; Endothelial and erythrocyte co-culture systems; Human plasma and PBMC samples for biomarker and immune analysis.
+Focus areas: Malaria (P. falciparum); Cerebral malaria; Severe anemia; Endothelial and mitochondrial stress responses; Autoantibody- and XO-mediated vascular pathology.
+Disease relevance: Defining molecular and immune mechanisms driving vascular injury and anemia in malaria to identify biomarkers and develop protective therapeutic strategies.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Global health &amp; parasitic diseases (NIAID tropical medicine &amp; parasitology programs).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Jonas Schluter, PhD Bacteriology
+Epigenetic &amp; Cellular Signaling
+Immunology
+Systems Microbiology
+Translational Research Systems Microbiology / Immunology / Translational The Schluter Lab investigates how microbial communities form, evolve, and influence host health, with the goal of harnessing the human microbiota as a therapeutic target. Combining large-scale data analysis, ecological theory, and anaerobic cultivation experiments, the lab uncovers fundamental principles of host–microbiota evolution and identifies strategies to manipulate microbial ecosystems for disease prevention and treatment. Integrating systems biology, microbiome sequencing, and computational modeling, the group studies how the gut microbiota shapes immune-cell dynamics, epithelial integrity, and infection susceptibility. Their work has shown that gut microbial composition predicts immune reconstitution, inflammatory outcomes, and resistance to pathogen invasion across clinical contexts including viral infection, hematopoietic cell transplantation, and antibiotic exposure. Current efforts focus on predictive modeling of microbiome–immune interactions, mechanistic dissection of microbial drivers of inflammation and antimicrobial resistance, and development of computational frameworks to forecast immune resilience and infection risk across patient populations. Microbiome ecology, evolution, and temporal dynamics
+Host–microbiota interactions regulating immunity and disease susceptibility
+Systems and computational microbiology integrating metagenomics and multi-omics data
+Ecological and dynamical-systems modeling to predict outcomes of microbial interactions
+Machine learning and network inference for microbiome–host prediction
+Phage–bacterium interactions and microbial regulation
+Microbiome influences on immune checkpoint therapy and host defense
+Microbial interactions in gnotobiotic and defined-community mouse models
+Translational microbiome medicine and therapeutic ecosystem manipulation Bioinformatics; Metagenomics and metatranscriptomics (high-throughput sequencing); Microbiome GWAS and longitudinal genome-wide microbiome analytics; Ecological and dynamical-systems modeling; Machine learning and predictive modeling for microbial and host–microbiota interactions; Multi-omics data integration (microbial composition, function, and host responses); Gnotobiotic and defined-community mouse models; Host immune profiling and flow cytometry; Anaerobic microbial cultivation; Reproducible computational pipelines and open-source tool development. Algorithmic modeling (Shenhav)
+Pediatric microbiome &amp; vaccines (Ratner)
+Airway colonization ecology (Weiser)
+Nuclear receptor‑driven inflammation intersecting with microbiome changes (Garabedian) Model systems: Human microbiome and immune cohorts; Gnotobiotic and defined-community mice; Antibiotic-perturbation and infection models; In vitro microbial communities; Computational ecosystem simulations.
+Focus areas: Microbiome ecology and host–microbiota interactions; Microbiome-driven inflammation, metabolism, and infection susceptibility; Cancer immunotherapy responses; Antibiotic-associated dysbiosis and microbial resilience.
+Disease relevance: Inflammatory bowel disease; Metabolic and inflammatory disorders; Microbiome-mediated cancer and infection outcomes.">
+      <h2>Jonas Schluter, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Epigenetic &amp; Cellular Signaling<br>Immunology<br>Systems Microbiology<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Systems Microbiology / Immunology / Translational</p>
+      <p><strong>Lab synopsis:</strong> The Schluter Lab investigates how microbial communities form, evolve, and influence host health, with the goal of harnessing the human microbiota as a therapeutic target. Combining large-scale data analysis, ecological theory, and anaerobic cultivation experiments, the lab uncovers fundamental principles of host–microbiota evolution and identifies strategies to manipulate microbial ecosystems for disease prevention and treatment. Integrating systems biology, microbiome sequencing, and computational modeling, the group studies how the gut microbiota shapes immune-cell dynamics, epithelial integrity, and infection susceptibility. Their work has shown that gut microbial composition predicts immune reconstitution, inflammatory outcomes, and resistance to pathogen invasion across clinical contexts including viral infection, hematopoietic cell transplantation, and antibiotic exposure. Current efforts focus on predictive modeling of microbiome–immune interactions, mechanistic dissection of microbial drivers of inflammation and antimicrobial resistance, and development of computational frameworks to forecast immune resilience and infection risk across patient populations.</p>
+      <p><strong>Research keywords:</strong> Microbiome ecology, evolution, and temporal dynamics
+Host–microbiota interactions regulating immunity and disease susceptibility
+Systems and computational microbiology integrating metagenomics and multi-omics data
+Ecological and dynamical-systems modeling to predict outcomes of microbial interactions
+Machine learning and network inference for microbiome–host prediction
+Phage–bacterium interactions and microbial regulation
+Microbiome influences on immune checkpoint therapy and host defense
+Microbial interactions in gnotobiotic and defined-community mouse models
+Translational microbiome medicine and therapeutic ecosystem manipulation</p>
+      <p><strong>Experimental capabilities:</strong> Bioinformatics; Metagenomics and metatranscriptomics (high-throughput sequencing); Microbiome GWAS and longitudinal genome-wide microbiome analytics; Ecological and dynamical-systems modeling; Machine learning and predictive modeling for microbial and host–microbiota interactions; Multi-omics data integration (microbial composition, function, and host responses); Gnotobiotic and defined-community mouse models; Host immune profiling and flow cytometry; Anaerobic microbial cultivation; Reproducible computational pipelines and open-source tool development.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Algorithmic modeling (Shenhav)
+Pediatric microbiome &amp; vaccines (Ratner)
+Airway colonization ecology (Weiser)
+Nuclear receptor‑driven inflammation intersecting with microbiome changes (Garabedian)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Human microbiome and immune cohorts; Gnotobiotic and defined-community mice; Antibiotic-perturbation and infection models; In vitro microbial communities; Computational ecosystem simulations.
+Focus areas: Microbiome ecology and host–microbiota interactions; Microbiome-driven inflammation, metabolism, and infection susceptibility; Cancer immunotherapy responses; Antibiotic-associated dysbiosis and microbial resilience.
+Disease relevance: Inflammatory bowel disease; Metabolic and inflammatory disorders; Microbiome-mediated cancer and infection outcomes.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Microbiome–host interactions and systems immunology (NIAID/NIDDK microbiome and immune regulation initiatives).</li><li>Cancer biology &amp; tumor microenvironment (NCI mechanistic R01s; immuno-oncology initiatives).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Robert J. Schneider, PhD Immunology
+Post-transcriptional and Translational Research
+Translational Research RNA Biology / Translation Control / Cancer Biology / Regenerative Biology The Schneider Lab investigates how selective regulation of mRNA stability and translation controls cancer metastasis, immune cell differentiation, and tissue regeneration, with an emphasis on developing RNA-targeted therapeutics. The group defines how non-canonical and cap-dependent translation pathways remodel cellular proteomes in response to stress, inflammation, and oncogenic signaling. Their studies identified DAP5/eIF4G2-dependent translation as critical for Treg stability and immune tolerance, while eIF4E-driven translation promotes T follicular helper (TFH) differentiation and autoimmune pathology. In cancer, the lab uncovered translational programs that enable metastasis and survival under hypoxia and metabolic stress. Current efforts focus on mapping translation factor networks and RNA regulons that control immune and tumor cell states, and leveraging these insights to design selective translational inhibitors and RNA-based therapeutics. Selective regulation of mRNA stability and translation in cancer metastasis and epithelial–mesenchymal transition (EMT).
+Translational control of T cell and macrophage lineage commitment and immune function.
+RNA biology in adult tissue regeneration, with emphasis on skeletal muscle repair.
+Mechanistic dissection of RNA modifications (m⁶A) and non-canonical translation pathways.
+mRNA-specific translation factors (eIF4E, DAP5/eIF4G2) in immunity, inflammation, and cancer.
+Development of RNA-targeted and translation-based therapeutics. Molecular biology and cloning; Cell culture (immortalized and primary); Organoid development; Mouse tumor and skeletal muscle regeneration models; T cell and macrophage lineage assays; Immunohistochemistry and tissue histopathology; RNA sequencing (bulk, m⁶A, nano-ARE); Protein and RNA biochemistry; Structural biology (in collaboration with the Nudler Lab); Microscopy (TEM, confocal). RNA biology (Mohr/Belasco)
+Cancer therapeutics (Garabedian) Model systems: Mouse tumor and skeletal muscle regeneration models; Primary and immortalized cell culture; Organoid systems for translational regulation studies; T cell and macrophage lineage assays.
+Focus areas: Cancer metastasis; Immune regulation; RNA biology and modification; Skeletal muscle regeneration.
+Disease relevance: Understanding how selective mRNA translation and stability control cancer progression, immune cell differentiation, and tissue repair, with the goal of developing RNA-targeted therapeutics.">
+      <h2>Robert J. Schneider, PhD</h2>
+      <p class="nyu-class">Immunology<br>Post-transcriptional and Translational Research<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> RNA Biology / Translation Control / Cancer Biology / Regenerative Biology</p>
+      <p><strong>Lab synopsis:</strong> The Schneider Lab investigates how selective regulation of mRNA stability and translation controls cancer metastasis, immune cell differentiation, and tissue regeneration, with an emphasis on developing RNA-targeted therapeutics. The group defines how non-canonical and cap-dependent translation pathways remodel cellular proteomes in response to stress, inflammation, and oncogenic signaling. Their studies identified DAP5/eIF4G2-dependent translation as critical for Treg stability and immune tolerance, while eIF4E-driven translation promotes T follicular helper (TFH) differentiation and autoimmune pathology. In cancer, the lab uncovered translational programs that enable metastasis and survival under hypoxia and metabolic stress. Current efforts focus on mapping translation factor networks and RNA regulons that control immune and tumor cell states, and leveraging these insights to design selective translational inhibitors and RNA-based therapeutics.</p>
+      <p><strong>Research keywords:</strong> Selective regulation of mRNA stability and translation in cancer metastasis and epithelial–mesenchymal transition (EMT).
+Translational control of T cell and macrophage lineage commitment and immune function.
+RNA biology in adult tissue regeneration, with emphasis on skeletal muscle repair.
+Mechanistic dissection of RNA modifications (m⁶A) and non-canonical translation pathways.
+mRNA-specific translation factors (eIF4E, DAP5/eIF4G2) in immunity, inflammation, and cancer.
+Development of RNA-targeted and translation-based therapeutics.</p>
+      <p><strong>Experimental capabilities:</strong> Molecular biology and cloning; Cell culture (immortalized and primary); Organoid development; Mouse tumor and skeletal muscle regeneration models; T cell and macrophage lineage assays; Immunohistochemistry and tissue histopathology; RNA sequencing (bulk, m⁶A, nano-ARE); Protein and RNA biochemistry; Structural biology (in collaboration with the Nudler Lab); Microscopy (TEM, confocal).</p>
+      <p><strong>Complementary areas (AI-identified):</strong> RNA biology (Mohr/Belasco)
+Cancer therapeutics (Garabedian)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Mouse tumor and skeletal muscle regeneration models; Primary and immortalized cell culture; Organoid systems for translational regulation studies; T cell and macrophage lineage assays.
+Focus areas: Cancer metastasis; Immune regulation; RNA biology and modification; Skeletal muscle regeneration.
+Disease relevance: Understanding how selective mRNA translation and stability control cancer progression, immune cell differentiation, and tissue repair, with the goal of developing RNA-targeted therapeutics.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Cancer biology &amp; tumor microenvironment (NCI mechanistic R01s; immuno-oncology initiatives).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Liat Shenhav, PhD Systems Microbiology Systems Microbiology The Shenhav Lab develops mathematical and AI-driven models to decode complex microbiome and host datasets, with applications in maternal and child health. Integrating ecological theory, statistical inference, and machine learning, the lab builds algorithms to infer microbial dynamics, cross-kingdom interactions, and predictive biomarkers from high-dimensional multi-omics and clinical datasets. A major methodological contribution is FEAST (Fast Expectation-Maximization for Microbial Source Tracking), which enables quantitative tracing of microbial origins and community assembly across hosts and environments. The group combines probabilistic modeling, network inference, and dynamical-systems approaches to uncover the ecological and evolutionary rules governing microbiome structure and resilience. Current efforts center on maternal–infant ecosystems, including the human milk and early-life microbiome, to understand how microbial transmission, metabolic crosstalk, and host responses shape immune and metabolic development. These integrative frameworks aim to identify predictive microbial and molecular signatures that can inform precision interventions and microbiome-based therapeutics. Human microbiome dynamics across early life stages (infancy, pregnancy, lactation)
+Human milk composition and its role in infant microbial colonization and immune development
+Artificial intelligence (AI) and machine learning for multi-omics and microbiome data analysis
+Longitudinal and time-series modeling of microbial community trajectories
+Tensor factorization and dimensionality-reduction methods for complex biological data
+Community ecology theory applied to host–microbiome systems
+Maternal and child health: fertility, pregnancy outcomes, and lactation biology
+Multi-omics integration (genomics, metagenomics, microbiome, human milk metabolomics)
+Open, reproducible computational pipelines for microbiome and multi-omics research
+Algorithm development for contamination control, batch correction, and metadata normalization Systems microbiology; Microbial genomics; Algorithm and software development; Bayesian, statistical, and machine learning (ML) frameworks for microbiome data; Multi-omics integration (metagenomics, transcriptomics, metabolomics) with clinical metadata; Reproducible pipelines for large-scale data analysis; Collaborative validation across cohorts and consortia; Data harmonization and adherence to FAIR (Findable, Accessible, Interoperable, Reusable) principles; Ecological and dynamical-systems modeling; Network inference and source-tracking algorithms (e.g., FEAST). Systems microbiome (Schluter)
+Pediatric infection &amp; vaccine responses (Ratner)
+Airway ecology (Weiser) 
+Nuclear receptor‑linked gene programs intersecting with microbiome signals (Garabedian) Model systems: Maternal–infant microbiome cohorts; Human milk and early-life microbial ecosystems (gut, nasal, respiratory); Computational and ecological simulations of microbiome–host interactions.
+Focus areas: Maternal and child health (pregnancy, lactation, preterm birth); Early-life microbial colonization and respiratory health; Human milk composition and microbiome-linked immune and metabolic outcomes; Microbiome-mediated inflammatory and metabolic disease; Precision health biomarkers.
+Disease relevance: Preterm birth; Infant respiratory and metabolic disorders; Maternal–infant immune and microbiome dysregulation.">
+      <h2>Liat Shenhav, PhD</h2>
+      <p class="nyu-class">Systems Microbiology</p>
+      <p><strong>Specialty areas:</strong> Systems Microbiology</p>
+      <p><strong>Lab synopsis:</strong> The Shenhav Lab develops mathematical and AI-driven models to decode complex microbiome and host datasets, with applications in maternal and child health. Integrating ecological theory, statistical inference, and machine learning, the lab builds algorithms to infer microbial dynamics, cross-kingdom interactions, and predictive biomarkers from high-dimensional multi-omics and clinical datasets. A major methodological contribution is FEAST (Fast Expectation-Maximization for Microbial Source Tracking), which enables quantitative tracing of microbial origins and community assembly across hosts and environments. The group combines probabilistic modeling, network inference, and dynamical-systems approaches to uncover the ecological and evolutionary rules governing microbiome structure and resilience. Current efforts center on maternal–infant ecosystems, including the human milk and early-life microbiome, to understand how microbial transmission, metabolic crosstalk, and host responses shape immune and metabolic development. These integrative frameworks aim to identify predictive microbial and molecular signatures that can inform precision interventions and microbiome-based therapeutics.</p>
+      <p><strong>Research keywords:</strong> Human microbiome dynamics across early life stages (infancy, pregnancy, lactation)
+Human milk composition and its role in infant microbial colonization and immune development
+Artificial intelligence (AI) and machine learning for multi-omics and microbiome data analysis
+Longitudinal and time-series modeling of microbial community trajectories
+Tensor factorization and dimensionality-reduction methods for complex biological data
+Community ecology theory applied to host–microbiome systems
+Maternal and child health: fertility, pregnancy outcomes, and lactation biology
+Multi-omics integration (genomics, metagenomics, microbiome, human milk metabolomics)
+Open, reproducible computational pipelines for microbiome and multi-omics research
+Algorithm development for contamination control, batch correction, and metadata normalization</p>
+      <p><strong>Experimental capabilities:</strong> Systems microbiology; Microbial genomics; Algorithm and software development; Bayesian, statistical, and machine learning (ML) frameworks for microbiome data; Multi-omics integration (metagenomics, transcriptomics, metabolomics) with clinical metadata; Reproducible pipelines for large-scale data analysis; Collaborative validation across cohorts and consortia; Data harmonization and adherence to FAIR (Findable, Accessible, Interoperable, Reusable) principles; Ecological and dynamical-systems modeling; Network inference and source-tracking algorithms (e.g., FEAST).</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Systems microbiome (Schluter)
+Pediatric infection &amp; vaccine responses (Ratner)
+Airway ecology (Weiser) 
+Nuclear receptor‑linked gene programs intersecting with microbiome signals (Garabedian)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Maternal–infant microbiome cohorts; Human milk and early-life microbial ecosystems (gut, nasal, respiratory); Computational and ecological simulations of microbiome–host interactions.
+Focus areas: Maternal and child health (pregnancy, lactation, preterm birth); Early-life microbial colonization and respiratory health; Human milk composition and microbiome-linked immune and metabolic outcomes; Microbiome-mediated inflammatory and metabolic disease; Precision health biomarkers.
+Disease relevance: Preterm birth; Infant respiratory and metabolic disorders; Maternal–infant immune and microbiome dysregulation.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Microbiome–host interactions and systems immunology (NIAID/NIDDK microbiome and immune regulation initiatives).</li><li>Pediatric infection, vaccination, and developmental immunity (NICHD/NIAID pediatric-focused opportunities).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Bo Shopsin, MD, PhD Bacteriology
+Drivers of Microbial Pathogenesis
+Translational Research Bacteriology / Antimicrobial Resistance / Clinical Microbiology The Shopsin Lab investigates how Staphylococcus aureus, particularly methicillin-resistant S. aureus (MRSA), adapts to and persists within human hosts. Using team-science, forensic approaches that connect field epidemiology and clinical observations with molecular and genomic analyses, the lab identifies key pathogen adaptations that drive persistence, virulence, and antimicrobial resistance.
+Their work integrates population genomics, expression profiling, and animal infection models to define how MRSA evolves under selective pressures such as antibiotic exposure, host immunity, and microbiome disruption. Recent studies have uncovered prophage-encoded methyltransferases that epigenetically reprogram MRSA virulence, and metabolic and microbiota-dependent adaptations that enable colonization and resistance during intestinal persistence. Current efforts focus on identifying pathogen–host interaction mechanisms that promote MRSA survival across niches — from skin and mucosal surfaces to the gut — and translating these discoveries into therapeutic and prognostic targets to limit MRSA transmission and infection in healthcare and community settings. MRSA adaptation and persistence in human hosts.
+Epidemiology and population genetics of Staphylococcus aureus.
+Host–pathogen interactions driving colonization and immune evasion.
+Therapeutic and prognostic pathogen adaptations.
+Evolution of hospital- and community-acquired infections. In vivo and ex vivo infection models; Hospital-scale genome sequencing, surveillance, and bioinformatic analytics; Classical molecular microbiology (plasmid curing, transduction, gene knockouts, complementation, reporter fusions); Expression profiling (transcriptomics, RNA-seq); Population genetics and epidemiological modeling; Bacterial culture and antimicrobial resistance phenotyping; Phage and mobile genetic element analysis; Host–pathogen interaction assays. Genomics of resistance (Pironti)
+Immunity to S. aureus (Duerr)
+Translational medicine (Ortigoza) Model systems: Staphylococcus aureus and MRSA infection and colonization models; Hospital and community outbreak surveillance datasets; In vivo and ex vivo models of host–pathogen interaction.
+Focus areas: MRSA and Staphylococcus aureus pathogenesis; Antimicrobial resistance (AMR); Nosocomial infections; Host adaptation and transmission dynamics.
+Disease relevance: Defining genomic, molecular, and ecological mechanisms that drive MRSA persistence, virulence, and spread to guide infection control and therapeutic strategies.">
+      <h2>Bo Shopsin, MD, PhD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis<br>Translational Research</p>
+      <p><strong>Specialty areas:</strong> Bacteriology / Antimicrobial Resistance / Clinical Microbiology</p>
+      <p><strong>Lab synopsis:</strong> The Shopsin Lab investigates how Staphylococcus aureus, particularly methicillin-resistant S. aureus (MRSA), adapts to and persists within human hosts. Using team-science, forensic approaches that connect field epidemiology and clinical observations with molecular and genomic analyses, the lab identifies key pathogen adaptations that drive persistence, virulence, and antimicrobial resistance.
+Their work integrates population genomics, expression profiling, and animal infection models to define how MRSA evolves under selective pressures such as antibiotic exposure, host immunity, and microbiome disruption. Recent studies have uncovered prophage-encoded methyltransferases that epigenetically reprogram MRSA virulence, and metabolic and microbiota-dependent adaptations that enable colonization and resistance during intestinal persistence. Current efforts focus on identifying pathogen–host interaction mechanisms that promote MRSA survival across niches — from skin and mucosal surfaces to the gut — and translating these discoveries into therapeutic and prognostic targets to limit MRSA transmission and infection in healthcare and community settings.</p>
+      <p><strong>Research keywords:</strong> MRSA adaptation and persistence in human hosts.
+Epidemiology and population genetics of Staphylococcus aureus.
+Host–pathogen interactions driving colonization and immune evasion.
+Therapeutic and prognostic pathogen adaptations.
+Evolution of hospital- and community-acquired infections.</p>
+      <p><strong>Experimental capabilities:</strong> In vivo and ex vivo infection models; Hospital-scale genome sequencing, surveillance, and bioinformatic analytics; Classical molecular microbiology (plasmid curing, transduction, gene knockouts, complementation, reporter fusions); Expression profiling (transcriptomics, RNA-seq); Population genetics and epidemiological modeling; Bacterial culture and antimicrobial resistance phenotyping; Phage and mobile genetic element analysis; Host–pathogen interaction assays.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Genomics of resistance (Pironti)
+Immunity to S. aureus (Duerr)
+Translational medicine (Ortigoza)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Staphylococcus aureus and MRSA infection and colonization models; Hospital and community outbreak surveillance datasets; In vivo and ex vivo models of host–pathogen interaction.
+Focus areas: MRSA and Staphylococcus aureus pathogenesis; Antimicrobial resistance (AMR); Nosocomial infections; Host adaptation and transmission dynamics.
+Disease relevance: Defining genomic, molecular, and ecological mechanisms that drive MRSA persistence, virulence, and spread to guide infection control and therapeutic strategies.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Kenneth A. Stapleford, PhD Drivers of Microbial Pathogenesis
+Vector-borne Diseases
+Virology Virology / Arbovirology / Viral Evolution The Stapleford Lab investigates the mechanisms of arbovirus infection, replication, and pathogenesis, using viral evolution as a tool to identify determinants of virulence and transmission. By integrating viral genomics, molecular virology, and host–pathogen interaction models, the lab defines how RNA viruses such as chikungunya, dengue, and Zika adapt across mosquito and mammalian hosts. Their work revealed that chikungunya virus (CHIKV) evolves within hosts to alter glycoprotein conformation and receptor engagement, influencing tissue tropism and persistence. They identified MAVS-dependent antiviral signaling as a key barrier preventing chronic cardiac infection, and demonstrated that viral mutations modulate innate immune sensing, replication fidelity, and vector competence. Current efforts focus on linking genetic signatures of viral adaptation to disease outcomes, guiding the development of vaccines and antivirals that account for viral evolution and host variability. Mechanisms of arbovirus infection, replication, and pathogenesis.
+Viral evolution as a tool to identify determinants of virulence and transmission.
+Adaptation of chikungunya, dengue, and Zika viruses to mosquito and mammalian hosts.
+Cross-species transmission and emergence of novel arboviral variants.
+Molecular mechanisms governing viral receptor usage, immune evasion, and replication fidelity.
+Host innate immune pathways (e.g., MAVS signaling) that restrict arboviral persistence. Plaque assays; RNA extraction and viral load quantification; Viral genome sequencing and phylogenetic analysis; Virus growth kinetics and replication assays; Mouse and mosquito infection models; Infectivity and transmission assays; Reverse genetics and viral mutagenesis; Immunofluorescence and confocal microscopy; Molecular cloning and transfection; Flow cytometry for host immune response profiling; Bioinformatics for viral evolution and population analysis. Immunity to arboviruses (Khanna)
+Translational infection models (Ortigoza) Model systems: Mouse and mosquito infection models; Cell culture systems for arbovirus replication and evolution; Reverse genetics platforms for chikungunya, dengue, and Zika viruses.
+Focus areas: Arbovirus replication and transmission; Pathogenesis in mosquito and mammalian hosts; Viral evolution and adaptation across species; Mechanisms of host restriction and immune evasion.
+Disease relevance: Understanding how evolutionary changes in arboviruses alter virulence, tissue tropism, and transmissibility to inform vaccine and antiviral development.">
+      <h2>Kenneth A. Stapleford, PhD</h2>
+      <p class="nyu-class">Drivers of Microbial Pathogenesis<br>Vector-borne Diseases<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Virology / Arbovirology / Viral Evolution</p>
+      <p><strong>Lab synopsis:</strong> The Stapleford Lab investigates the mechanisms of arbovirus infection, replication, and pathogenesis, using viral evolution as a tool to identify determinants of virulence and transmission. By integrating viral genomics, molecular virology, and host–pathogen interaction models, the lab defines how RNA viruses such as chikungunya, dengue, and Zika adapt across mosquito and mammalian hosts. Their work revealed that chikungunya virus (CHIKV) evolves within hosts to alter glycoprotein conformation and receptor engagement, influencing tissue tropism and persistence. They identified MAVS-dependent antiviral signaling as a key barrier preventing chronic cardiac infection, and demonstrated that viral mutations modulate innate immune sensing, replication fidelity, and vector competence. Current efforts focus on linking genetic signatures of viral adaptation to disease outcomes, guiding the development of vaccines and antivirals that account for viral evolution and host variability.</p>
+      <p><strong>Research keywords:</strong> Mechanisms of arbovirus infection, replication, and pathogenesis.
+Viral evolution as a tool to identify determinants of virulence and transmission.
+Adaptation of chikungunya, dengue, and Zika viruses to mosquito and mammalian hosts.
+Cross-species transmission and emergence of novel arboviral variants.
+Molecular mechanisms governing viral receptor usage, immune evasion, and replication fidelity.
+Host innate immune pathways (e.g., MAVS signaling) that restrict arboviral persistence.</p>
+      <p><strong>Experimental capabilities:</strong> Plaque assays; RNA extraction and viral load quantification; Viral genome sequencing and phylogenetic analysis; Virus growth kinetics and replication assays; Mouse and mosquito infection models; Infectivity and transmission assays; Reverse genetics and viral mutagenesis; Immunofluorescence and confocal microscopy; Molecular cloning and transfection; Flow cytometry for host immune response profiling; Bioinformatics for viral evolution and population analysis.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Immunity to arboviruses (Khanna)
+Translational infection models (Ortigoza)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Mouse and mosquito infection models; Cell culture systems for arbovirus replication and evolution; Reverse genetics platforms for chikungunya, dengue, and Zika viruses.
+Focus areas: Arbovirus replication and transmission; Pathogenesis in mosquito and mammalian hosts; Viral evolution and adaptation across species; Mechanisms of host restriction and immune evasion.
+Disease relevance: Understanding how evolutionary changes in arboviruses alter virulence, tissue tropism, and transmissibility to inform vaccine and antiviral development.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Benjamin tenOever, PhD Drivers of Microbial Pathogenesis
+Post-transcriptional and Translational Research
+Translational Research
+Virology Virology / Post-Transcriptional / Translational The tenOever Lab investigates the evolutionary interplay between viruses and their hosts to define fundamental rules of molecular biology and innate immunity. The group traces how ancient RNA-based defense systems—RNase III–type nucleases, Argonaute pathways, and microRNA-like regulators—were repurposed over evolution into the modern antiviral programs used by vertebrates, revealing conserved RNA-centered mechanisms across domains of life. Building on these insights, the lab engineers programmable RNA and viral vector platforms to control immune sensing and gene expression in a cell- and tissue-specific manner, with the goal of creating next-generation antiviral and therapeutic technologies. By integrating molecular virology, RNA biology, and synthetic biology, the lab defines how RNA viruses—including influenza A, SARS-CoV-2, and paramyxoviruses—reprogram host transcription, translation, and RNA processing to evade immune detection. They demonstrated that SARS-CoV-2 delays interferon activation while prior influenza infection primes antiviral defenses that suppress its replication. Other work showed that ADAR1 editing can neutralize antiviral RNA interference, that archaeal L7Ae-like proteins inhibit viral RNA splicing across orthomyxoviruses, and that synthetic influenza circuits can be rewritten to study and re-engineer viral logic. Current efforts focus on mapping and exploiting RNA editing, splicing control, and small-RNA pathways to engineer programmable RNA and viral systems for antiviral therapy, immune modulation, and precision gene expression. Innate antiviral immunity and the molecular recognition of viral RNA
+Coordination of type I/III interferon signaling networks and host transcriptional reprogramming
+Virus–host co-evolution and adaptive antagonism of antiviral pathways
+RNA editing and splicing in infection (ADAR- and L7Ae-mediated modulation of viral RNA)
+microRNA-mediated regulation of viral replication and host gene expression
+Synthetic and programmable RNA or viral systems for immune modulation and gene delivery
+Engineering viral logic circuits to study and manipulate host–pathogen interactions
+Translational RNA therapeutics and next-generation antiviral strategies Reverse genetics systems for RNA viruses; Generation and rescue of recombinant and microRNA-programmed viruses; Viral mutagenesis and reporter virus construction; BSL-2 and BSL-3 infection models; Innate immune signaling and interferon response assays (qPCR, ELISA, reporter lines); RNA-seq and single-cell transcriptomics of infected cells; microRNA profiling and manipulation (cloning, mimic/inhibitor transfection, small RNA-seq); RNA editing and splicing analyses (ADAR- and L7Ae-dependent mechanisms, RNA structure mapping); Ribosome profiling and translational control assays; CRISPR/Cas-based host–virus perturbation screens; Viral growth kinetics and plaque assays; Immunoblotting; Immunofluorescence and confocal microscopy; Flow cytometry and immune cell phenotyping; Mass spectrometry–based proteomics of infected cells; Computational modeling of viral and host RNA networks; Design and optimization of synthetic and programmable viral vectors; RNA-encoded therapeutic and vaccine platform development; Collaborative in vivo infection and immune response models. HIV &amp; restriction factors (Landau)
+Arboviruses (Stapleford)
+Pediatric virology (Ratner) 
+Airway co‑infections (Weiser)
+Multi‑omics integration (Schluter/Shenhav) Model systems: Influenza A virus, SARS-CoV-2, and paramyxovirus infection models (e.g. Sendai virus); synthetic and recombinant viral platforms engineered for immune modulation and gene delivery; microRNA-programmed viral systems enabling cell-type-specific gene delivery; in vitro infection assays in primary and transformed cells; collaborative in vivo models of RNA virus infection and innate immune responses.
+Focus areas: Acute and emerging RNA virus infections; host innate immunity and viral immune evasion; antiviral and vaccine strategy development; viral RNA editing, splicing, and microRNA programming; RNA-based antivirals and programmable viral vectors for precision gene expression.
+Disease relevance: Influenza, COVID-19, and other emerging RNA-virus threats; viral infections in which impaired interferon responses or immune evasion drive pathology; diseases where RNA-encoded or viral-vector therapeutics could restore antiviral defense or enable targeted gene delivery.">
+      <h2>Benjamin tenOever, PhD</h2>
+      <p class="nyu-class">Drivers of Microbial Pathogenesis<br>Post-transcriptional and Translational Research<br>Translational Research<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Virology / Post-Transcriptional / Translational</p>
+      <p><strong>Lab synopsis:</strong> The tenOever Lab investigates the evolutionary interplay between viruses and their hosts to define fundamental rules of molecular biology and innate immunity. The group traces how ancient RNA-based defense systems—RNase III–type nucleases, Argonaute pathways, and microRNA-like regulators—were repurposed over evolution into the modern antiviral programs used by vertebrates, revealing conserved RNA-centered mechanisms across domains of life. Building on these insights, the lab engineers programmable RNA and viral vector platforms to control immune sensing and gene expression in a cell- and tissue-specific manner, with the goal of creating next-generation antiviral and therapeutic technologies. By integrating molecular virology, RNA biology, and synthetic biology, the lab defines how RNA viruses—including influenza A, SARS-CoV-2, and paramyxoviruses—reprogram host transcription, translation, and RNA processing to evade immune detection. They demonstrated that SARS-CoV-2 delays interferon activation while prior influenza infection primes antiviral defenses that suppress its replication. Other work showed that ADAR1 editing can neutralize antiviral RNA interference, that archaeal L7Ae-like proteins inhibit viral RNA splicing across orthomyxoviruses, and that synthetic influenza circuits can be rewritten to study and re-engineer viral logic. Current efforts focus on mapping and exploiting RNA editing, splicing control, and small-RNA pathways to engineer programmable RNA and viral systems for antiviral therapy, immune modulation, and precision gene expression.</p>
+      <p><strong>Research keywords:</strong> Innate antiviral immunity and the molecular recognition of viral RNA
+Coordination of type I/III interferon signaling networks and host transcriptional reprogramming
+Virus–host co-evolution and adaptive antagonism of antiviral pathways
+RNA editing and splicing in infection (ADAR- and L7Ae-mediated modulation of viral RNA)
+microRNA-mediated regulation of viral replication and host gene expression
+Synthetic and programmable RNA or viral systems for immune modulation and gene delivery
+Engineering viral logic circuits to study and manipulate host–pathogen interactions
+Translational RNA therapeutics and next-generation antiviral strategies</p>
+      <p><strong>Experimental capabilities:</strong> Reverse genetics systems for RNA viruses; Generation and rescue of recombinant and microRNA-programmed viruses; Viral mutagenesis and reporter virus construction; BSL-2 and BSL-3 infection models; Innate immune signaling and interferon response assays (qPCR, ELISA, reporter lines); RNA-seq and single-cell transcriptomics of infected cells; microRNA profiling and manipulation (cloning, mimic/inhibitor transfection, small RNA-seq); RNA editing and splicing analyses (ADAR- and L7Ae-dependent mechanisms, RNA structure mapping); Ribosome profiling and translational control assays; CRISPR/Cas-based host–virus perturbation screens; Viral growth kinetics and plaque assays; Immunoblotting; Immunofluorescence and confocal microscopy; Flow cytometry and immune cell phenotyping; Mass spectrometry–based proteomics of infected cells; Computational modeling of viral and host RNA networks; Design and optimization of synthetic and programmable viral vectors; RNA-encoded therapeutic and vaccine platform development; Collaborative in vivo infection and immune response models.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> HIV &amp; restriction factors (Landau)
+Arboviruses (Stapleford)
+Pediatric virology (Ratner) 
+Airway co‑infections (Weiser)
+Multi‑omics integration (Schluter/Shenhav)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Influenza A virus, SARS-CoV-2, and paramyxovirus infection models (e.g. Sendai virus); synthetic and recombinant viral platforms engineered for immune modulation and gene delivery; microRNA-programmed viral systems enabling cell-type-specific gene delivery; in vitro infection assays in primary and transformed cells; collaborative in vivo models of RNA virus infection and innate immune responses.
+Focus areas: Acute and emerging RNA virus infections; host innate immunity and viral immune evasion; antiviral and vaccine strategy development; viral RNA editing, splicing, and microRNA programming; RNA-based antivirals and programmable viral vectors for precision gene expression.
+Disease relevance: Influenza, COVID-19, and other emerging RNA-virus threats; viral infections in which impaired interferon responses or immune evasion drive pathology; diseases where RNA-encoded or viral-vector therapeutics could restore antiviral defense or enable targeted gene delivery.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Gene and cell therapy platforms / biologic delivery (NIH gene therapy &amp; vector engineering mechanisms; NCATS translational programs).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Jeffrey N. Weiser, MD Bacteriology
+Drivers of Microbial Pathogenesis
+Immunology Bacteriology / Immunology The Weiser Lab investigates the molecular basis of host–pathogen interactions in the human respiratory tract, with a primary focus on Streptococcus pneumoniae colonization, transmission, and immune evasion. Research extends to Haemophilus influenzae, Klebsiella pneumoniae, Staphylococcus aureus, and influenza A virus to define conserved mechanisms of airway pathogenesis. The lab integrates bacterial genetics, mucosal immunology, and population-level variation to understand how microbial traits—such as capsule structure, bacteriocin competition systems (BlpAB), and neuraminidase activity—govern mucosal persistence and transitions from commensal carriage to invasive disease. Recent studies revealed that neuraminidase-mediated mucus remodeling enhances colonization, Blp polymorphisms drive within-host competition and inflammation, and capsule diversity limits genetic exchange and immune recognition. Current efforts aim to delineate the bacterial and host factors that balance colonization and virulence and to identify strategies that prevent transmission, vaccine escape, and antibiotic resistance across respiratory pathogens. Bacterial colonization and persistence in the upper respiratory tract
+Host–pathogen interactions shaping innate and adaptive immunity
+Streptococcus pneumoniae pathogenesis, carriage, and virulence regulation
+Genetic and molecular determinants of bacterial fitness and transmission
+Microbial competition, co-colonization, and population dynamics
+Virus–bacterium co-infection, particularly influenza–pneumococcus interactions
+Role of phosphorylcholine and other bacterial surface molecules in immune evasion
+Mucosal immunity and age-dependent susceptibility to infection
+Influence of the upper-airway microbiota on systemic immune responses Mouse models of nasopharyngeal colonization, transmission, and pneumonia; Bacterial genetics, mutagenesis, and strain engineering; Streptococcus pneumoniae and Haemophilus influenzae culture and infection assays; Co-infection models with influenza and other respiratory viruses; Flow cytometry and cytokine profiling of mucosal immune responses; Biofilm formation and dispersal assays; Quantitative bacteriology and airway-tissue imaging; In vitro epithelial adhesion and invasion assays; Vaccine and antimicrobial efficacy testing; Microbiome and metagenomic analysis of respiratory tract communities; Population-genetic and comparative-genomic analyses of bacterial virulence and adaptation. Clinical pediatrics &amp; vaccines (Ratner)
+Antimicrobial resistance (AMR) (Shopsin)
+Viral–bacterial co‑pathogenesis (Landau/tenOever)
+Microbiome–colonization interfaces (Schluter/Shenhav) Model systems: Mouse models of nasopharyngeal colonization, transmission, and pneumonia; Ex vivo airway and epithelial adhesion models; Co-infection systems integrating Streptococcus pneumoniae, Haemophilus influenzae, Staphylococcus aureus, and influenza A virus.
+Focus areas: Bacterial colonization, competition, and transmission within the upper respiratory tract; Outcomes of nasopharyngeal carriage and invasion, including otitis media, sinusitis, and pneumonia; Host mucosal immunity and vaccine strategy development; Viral–bacterial interactions driving superinfection; Antimicrobial resistance and bacterial evolution.
+Disease relevance: Pneumococcal and Haemophilus disease; Influenza-associated bacterial pneumonia; Vaccine-preventable respiratory infections; Antibiotic-resistant airway pathogens.">
+      <h2>Jeffrey N. Weiser, MD</h2>
+      <p class="nyu-class">Bacteriology<br>Drivers of Microbial Pathogenesis<br>Immunology</p>
+      <p><strong>Specialty areas:</strong> Bacteriology / Immunology</p>
+      <p><strong>Lab synopsis:</strong> The Weiser Lab investigates the molecular basis of host–pathogen interactions in the human respiratory tract, with a primary focus on Streptococcus pneumoniae colonization, transmission, and immune evasion. Research extends to Haemophilus influenzae, Klebsiella pneumoniae, Staphylococcus aureus, and influenza A virus to define conserved mechanisms of airway pathogenesis. The lab integrates bacterial genetics, mucosal immunology, and population-level variation to understand how microbial traits—such as capsule structure, bacteriocin competition systems (BlpAB), and neuraminidase activity—govern mucosal persistence and transitions from commensal carriage to invasive disease. Recent studies revealed that neuraminidase-mediated mucus remodeling enhances colonization, Blp polymorphisms drive within-host competition and inflammation, and capsule diversity limits genetic exchange and immune recognition. Current efforts aim to delineate the bacterial and host factors that balance colonization and virulence and to identify strategies that prevent transmission, vaccine escape, and antibiotic resistance across respiratory pathogens.</p>
+      <p><strong>Research keywords:</strong> Bacterial colonization and persistence in the upper respiratory tract
+Host–pathogen interactions shaping innate and adaptive immunity
+Streptococcus pneumoniae pathogenesis, carriage, and virulence regulation
+Genetic and molecular determinants of bacterial fitness and transmission
+Microbial competition, co-colonization, and population dynamics
+Virus–bacterium co-infection, particularly influenza–pneumococcus interactions
+Role of phosphorylcholine and other bacterial surface molecules in immune evasion
+Mucosal immunity and age-dependent susceptibility to infection
+Influence of the upper-airway microbiota on systemic immune responses</p>
+      <p><strong>Experimental capabilities:</strong> Mouse models of nasopharyngeal colonization, transmission, and pneumonia; Bacterial genetics, mutagenesis, and strain engineering; Streptococcus pneumoniae and Haemophilus influenzae culture and infection assays; Co-infection models with influenza and other respiratory viruses; Flow cytometry and cytokine profiling of mucosal immune responses; Biofilm formation and dispersal assays; Quantitative bacteriology and airway-tissue imaging; In vitro epithelial adhesion and invasion assays; Vaccine and antimicrobial efficacy testing; Microbiome and metagenomic analysis of respiratory tract communities; Population-genetic and comparative-genomic analyses of bacterial virulence and adaptation.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> Clinical pediatrics &amp; vaccines (Ratner)
+Antimicrobial resistance (AMR) (Shopsin)
+Viral–bacterial co‑pathogenesis (Landau/tenOever)
+Microbiome–colonization interfaces (Schluter/Shenhav)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Mouse models of nasopharyngeal colonization, transmission, and pneumonia; Ex vivo airway and epithelial adhesion models; Co-infection systems integrating Streptococcus pneumoniae, Haemophilus influenzae, Staphylococcus aureus, and influenza A virus.
+Focus areas: Bacterial colonization, competition, and transmission within the upper respiratory tract; Outcomes of nasopharyngeal carriage and invasion, including otitis media, sinusitis, and pneumonia; Host mucosal immunity and vaccine strategy development; Viral–bacterial interactions driving superinfection; Antimicrobial resistance and bacterial evolution.
+Disease relevance: Pneumococcal and Haemophilus disease; Influenza-associated bacterial pneumonia; Vaccine-preventable respiratory infections; Antibiotic-resistant airway pathogens.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Antimicrobial resistance &amp; stewardship (NIAID/CDC/BARDA AMR-focused mechanisms).</li><li>Respiratory viruses &amp; lung immunity (NIAID respiratory pathogens programs; CEIRR-like consortia; NHLBI lung injury/repair).</li><li>Microbiome–host interactions and systems immunology (NIAID/NIDDK microbiome and immune regulation initiatives).</li>
+        </ul>
+      </details>
+    </section>
+    
+
+    <section class="faculty-card" data-search="Angus C. Wilson, PhD Post-transcriptional and Translational Research
+Virology Virology / RNA Processing / Virus–Host Interactions The Wilson Lab uses viruses to uncover fundamental biological processes, with a focus on viral manipulation of host RNA processing, chromatin dynamics, and signaling pathways. The lab investigates how herpes simplex virus (HSV) establishes latency and reactivation in neurons, integrating viral genetics, neuronal models, and spatial transcriptomics and proteomics to dissect virus–host interactions at single-cell resolution. Their studies revealed how TOP2β-dependent DNA damage and AKT–mTORC1 signaling maintain latency, while stress-induced shifts in neuronal homeostasis trigger viral reactivation. The group also examines how virus-induced changes in nuclear architecture and RNA metabolism alter the biophysical and transcriptional landscape of infected cells.
+Current efforts focus on connecting host stress responses, epigenetic regulation, and viral gene expression to develop new strategies for controlling latency and reactivation in neurotropic viruses. Viruses as tools to uncover host biological mechanisms.
+Viral manipulation of host RNA processing (splicing, modification, decay).
+Spatial transcriptomics and proteomics of virus-infected cells.
+Biophysical and chromatin reprogramming of host cells during infection.
+Mechanisms distinguishing viral persistence, latency, and productive infection.
+Host stress and signaling pathways (e.g., AKT–mTORC1, TOP2β) regulating HSV latency and reactivation. Direct RNA sequencing and transcriptome analysis; Precision RNA modification mapping with custom bioinformatics pipelines; Spatial transcriptomics and proteomics; Fixed and live-cell fluorescence microscopy; Primary neuronal and transformed cell culture infection models; Lentiviral vector delivery of RNAi tools, fluorescent reporters, and mutant proteins/RNAs; Chromatin and epigenetic profiling; Single-cell and spatial multi-omics; Biochemical assays for RNA–protein interactions. RNA biology (Mohr/Belasco)
+Structural biology (Lee, Andrew Darwin, Schneider) Model systems: Neuronal and transformed cell culture models of herpes simplex virus (HSV) latency and reactivation; Lentiviral vector systems for host gene manipulation; RNA virus infection models for probing host RNA metabolism.
+Focus areas: RNA virus biology; Viral latency and persistence mechanisms; Host RNA processing and chromatin regulation during infection; Spatial and molecular mapping of virus–host interactions.
+Disease relevance: Defining how viruses reprogram host transcription, RNA processing, and nuclear architecture to control persistence, reactivation, and disease progression in neurotropic infections.">
+      <h2>Angus C. Wilson, PhD</h2>
+      <p class="nyu-class">Post-transcriptional and Translational Research<br>Virology</p>
+      <p><strong>Specialty areas:</strong> Virology / RNA Processing / Virus–Host Interactions</p>
+      <p><strong>Lab synopsis:</strong> The Wilson Lab uses viruses to uncover fundamental biological processes, with a focus on viral manipulation of host RNA processing, chromatin dynamics, and signaling pathways. The lab investigates how herpes simplex virus (HSV) establishes latency and reactivation in neurons, integrating viral genetics, neuronal models, and spatial transcriptomics and proteomics to dissect virus–host interactions at single-cell resolution. Their studies revealed how TOP2β-dependent DNA damage and AKT–mTORC1 signaling maintain latency, while stress-induced shifts in neuronal homeostasis trigger viral reactivation. The group also examines how virus-induced changes in nuclear architecture and RNA metabolism alter the biophysical and transcriptional landscape of infected cells.
+Current efforts focus on connecting host stress responses, epigenetic regulation, and viral gene expression to develop new strategies for controlling latency and reactivation in neurotropic viruses.</p>
+      <p><strong>Research keywords:</strong> Viruses as tools to uncover host biological mechanisms.
+Viral manipulation of host RNA processing (splicing, modification, decay).
+Spatial transcriptomics and proteomics of virus-infected cells.
+Biophysical and chromatin reprogramming of host cells during infection.
+Mechanisms distinguishing viral persistence, latency, and productive infection.
+Host stress and signaling pathways (e.g., AKT–mTORC1, TOP2β) regulating HSV latency and reactivation.</p>
+      <p><strong>Experimental capabilities:</strong> Direct RNA sequencing and transcriptome analysis; Precision RNA modification mapping with custom bioinformatics pipelines; Spatial transcriptomics and proteomics; Fixed and live-cell fluorescence microscopy; Primary neuronal and transformed cell culture infection models; Lentiviral vector delivery of RNAi tools, fluorescent reporters, and mutant proteins/RNAs; Chromatin and epigenetic profiling; Single-cell and spatial multi-omics; Biochemical assays for RNA–protein interactions.</p>
+      <p><strong>Complementary areas (AI-identified):</strong> RNA biology (Mohr/Belasco)
+Structural biology (Lee, Andrew Darwin, Schneider)</p>
+      <p><strong>Model systems / disease focus:</strong> Model systems: Neuronal and transformed cell culture models of herpes simplex virus (HSV) latency and reactivation; Lentiviral vector systems for host gene manipulation; RNA virus infection models for probing host RNA metabolism.
+Focus areas: RNA virus biology; Viral latency and persistence mechanisms; Host RNA processing and chromatin regulation during infection; Spatial and molecular mapping of virus–host interactions.
+Disease relevance: Defining how viruses reprogram host transcription, RNA processing, and nuclear architecture to control persistence, reactivation, and disease progression in neurotropic infections.</p>
+      <details>
+        <summary><strong>Example grant directions for this PI</strong></summary>
+        <ul>
+          <li>Gene and cell therapy platforms / biologic delivery (NIH gene therapy &amp; vector engineering mechanisms; NCATS translational programs).</li><li>Fundamental and translational immunology (NIAID basic immunology R01s; collaborative immunology programs).</li><li>Systems and data-driven biology (multi-omics / single-cell initiatives; collaborative U01/U19 mechanisms).</li>
+        </ul>
+      </details>
+    </section>
+    
+
   </main>
-
   <script>
-    (function () {
-      const searchInput = document.getElementById("searchInput");
-      const noResults = document.getElementById("noResults");
-      const cards = Array.from(document.querySelectorAll(".faculty-card"));
-
-      function normalize(text) {
-        return text.toLowerCase().replace(/\\s+/g, " ").trim();
-      }
-
-      function applyFilter() {
-        const query = normalize(searchInput.value);
-        let visibleCount = 0;
-
-        if (!query) {
-          cards.forEach(card => card.classList.remove("hidden"));
-          noResults.style.display = "none";
-          return;
+    const input = document.getElementById('searchInput');
+    const cards = Array.from(document.querySelectorAll('.faculty-card'));
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const blob = (card.dataset.search || '').toLowerCase();
+        if (!q || blob.includes(q)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
         }
-
-        cards.forEach(card => {
-          const text = normalize(card.textContent || "");
-          if (text.includes(query)) {
-            card.classList.remove("hidden");
-            visibleCount += 1;
-          } else {
-            card.classList.add("hidden");
-          }
-        });
-
-        noResults.style.display = visibleCount === 0 ? "block" : "none";
-      }
-
-      searchInput.addEventListener("input", applyFilter);
-    })();
+      });
+    });
   </script>
 </body>
 </html>
