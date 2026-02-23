@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Active Federal Opportunities – NYU Microbiology</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:24px;max-width:1200px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    input{padding:10px 12px;font-size:14px;min-width:320px}
+    select{padding:10px 12px;font-size:14px}
+    .meta{color:#555;margin:10px 0 18px}
+    .card{border:1px solid #ddd;border-radius:10px;padding:14px 16px;margin:10px 0}
+    .title{font-size:16px;margin:0 0 6px}
+    .sub{color:#444;font-size:13px;margin:0 0 10px}
+    .small{color:#666;font-size:12px}
+    a{color:#0b57d0;text-decoration:none}
+    a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <h1>Active federal opportunities</h1>
+  <div class="row">
+    <input id="q" placeholder="Search by title, number, agency, text…" />
+    <select id="sort">
+      <option value="close_date">Sort by close date</option>
+      <option value="post_date">Sort by post date</option>
+      <option value="agency_name">Sort by agency</option>
+    </select>
+  </div>
+  <div class="meta" id="meta"></div>
+  <div id="list"></div>
+
+  <script src="data/opportunities_data.js"></script>
+  <script>
+    const opps = (window.__OPPORTUNITIES__ || []).slice();
+
+    function toKey(v){ return (v===null || v===undefined) ? "" : String(v); }
+
+    function grantsGovUrl(o){
+      if (o.legacy_opportunity_id) return "https://www.grants.gov/search-results-detail/" + o.legacy_opportunity_id;
+      return null;
+    }
+
+    function render(){
+      const q = document.getElementById("q").value.trim().toLowerCase();
+      const sort = document.getElementById("sort").value;
+
+      let rows = opps.filter(o => {
+        if(!q) return true;
+        const blob = [
+          o.opportunity_number, o.opportunity_title, o.agency_name, o.top_level_agency_name,
+          o.applicant_eligibility_description, o.summary_description
+        ].map(toKey).join(" ").toLowerCase();
+        return blob.includes(q);
+      });
+
+      rows.sort((a,b) => {
+        const av = toKey(a[sort]);
+        const bv = toKey(b[sort]);
+        if (sort === "agency_name") return av.localeCompare(bv);
+        return av.localeCompare(bv);
+      });
+
+      document.getElementById("meta").textContent = rows.length + " opportunities shown";
+
+      const list = document.getElementById("list");
+      list.innerHTML = "";
+      for(const o of rows){
+        const url = grantsGovUrl(o);
+        const card = document.createElement("div");
+        card.className = "card";
+        const title = url
+          ? `<a href="${url}" target="_blank" rel="noreferrer">${o.opportunity_title || "(no title)"}</a>`
+          : (o.opportunity_title || "(no title)");
+        card.innerHTML = `
+          <div class="title">${title}</div>
+          <div class="sub">
+            ${toKey(o.opportunity_number)} · ${toKey(o.agency_name)} · closes ${toKey(o.close_date)} · posted ${toKey(o.post_date)}
+          </div>
+          <div class="small">award ceiling: ${toKey(o.award_ceiling)} · total funding: ${toKey(o.estimated_total_program_funding)} · expected awards: ${toKey(o.expected_number_of_awards)}</div>
+        `;
+        list.appendChild(card);
+      }
+    }
+
+    document.getElementById("q").addEventListener("input", render);
+    document.getElementById("sort").addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
