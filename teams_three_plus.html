@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Teams of three or more</title>
+  <link rel="stylesheet" href="teams.css" />
+</head>
+<body>
+<header>
+  <h1>AI Grant and Collaboration Initiative</h1>
+  <p>Department of Microbiology  NYU Grossman School of Medicine</p>
+</header>
+<nav>
+  <a href="#top">Home</a>
+  <a href="faculty.html">Faculty profiles</a>
+  <a href="microbiology_two_investigator_teams_cards.html">Pairs</a>
+  <a href="microbiology_three_plus_teams_cards.html">Teams of three or more</a>
+  <a href="#resources">Resources and model systems</a>
+  <a href="#approaches">Experimental approaches</a>
+</nav>
+
+<div class="container" style="max-width:1100px; margin:0 auto; padding:24px 16px;">
+  <h1 style="margin:0; color:var(--nyu-purple);">Teams of three or more</h1>
+  <div id="teams" style="margin-top:12px;">Loading…</div>
+</div>
+
+<script>
+window.__MODE__ = "team";
+(function(){
+  function esc(s){
+    s = String(s == null ? "" : s);
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+  function loadJson(path){
+    return fetch(path + "?cb=" + Date.now(), { cache: "no-store" }).then(r => {
+      if(!r.ok) throw new Error("Failed to load " + path + " status " + r.status);
+      return r.json();
+    });
+  }
+  function splitNames(v){
+    if(v==null) return [];
+    if(Array.isArray(v)) return v;
+    return String(v).split(/[\n,;|]+/g).map(x=>x.trim()).filter(Boolean);
+  }
+  function membersOf(t){
+    if(Array.isArray(t.members)) return t.members;
+    if(t.team_members) return splitNames(t.team_members);
+    return [];
+  }
+  function isPair(t){
+    var tt = String(t.team_type || t.team_size_category || "").toLowerCase();
+    if(tt === "pair") return true;
+    return membersOf(t).length === 2;
+  }
+  function isTeam(t){
+    var tt = String(t.team_type || t.team_size_category || "").toLowerCase();
+    if(tt === "team") return true;
+    return membersOf(t).length >= 3;
+  }
+  function aimsList(t){
+    if(Array.isArray(t.suggested_aims) && t.suggested_aims.length) return t.suggested_aims.slice(0,3);
+    if(t.suggested_specific_aim){
+      var parts = String(t.suggested_specific_aim).split(/(?<=[.!?])\s+/).filter(Boolean);
+      if(parts.length >= 3) return parts.slice(0,3);
+      if(parts.length === 2) return [parts[0], parts[1], "Aim 3: Validate the integrated approach against the FOA requirements."];
+      if(parts.length === 1) return [parts[0], "Aim 2: Integrate complementary capabilities across the team.", "Aim 3: Deliver a clear milestone-driven endpoint aligned to the announcement."];
+    }
+    return [
+      "Aim 1: Define the core problem and success metrics aligned to the FOA.",
+      "Aim 2: Build an integrated workflow spanning the team’s complementary strengths.",
+      "Aim 3: Validate outcomes in the most relevant model system and deliver the key endpoint."
+    ];
+  }
+
+  var mode = window.__MODE__ || "pair";
+  var box = document.getElementById("teams");
+
+  Promise.all([
+    loadJson("data/teams.json").catch(()=>[]),
+    loadJson("data/opportunities.json").catch(()=>[])
+  ]).then(function(res){
+    var teams = res[0] || [];
+    var opps = res[1] || [];
+
+    var oppById = {};
+    var oppByNum = {};
+    for(var i=0;i<opps.length;i++){
+      var o = opps[i] || {};
+      if(o.opportunity_id) oppById[o.opportunity_id] = o;
+      if(o.opportunity_number) oppByNum[o.opportunity_number] = o;
+    }
+
+    var keep = teams.filter(function(t){
+      return mode === "pair" ? isPair(t) : isTeam(t);
+    });
+
+    var html = '<div style="opacity:.8;">Found: ' + keep.length + '</div>';
+
+    for(var k=0;k<keep.length;k++){
+      var t = keep[k] || {};
+
+      // attach announcement link if missing
+      var o = (t.opportunity_id && oppById[t.opportunity_id]) ? oppById[t.opportunity_id] :
+              (t.opportunity_number && oppByNum[t.opportunity_number]) ? oppByNum[t.opportunity_number] : null;
+      if(o){
+        if(!t.opportunity_title && o.opportunity_title) t.opportunity_title = o.opportunity_title;
+        if(!t.opportunity_number && o.opportunity_number) t.opportunity_number = o.opportunity_number;
+        if(!t.opportunity_url) t.opportunity_url = o.opportunity_url || o.additional_info_url || "";
+      }
+
+      var title = t.suggested_title || t.opportunity_number || t.team_name || "";
+      var members = membersOf(t);
+      if(!members.length && Array.isArray(t.members)) members = t.members;
+
+      html += '<div class="card" style="padding:16px; margin-top:12px;">';
+      html +=   '<div style="font-weight:800; font-size:1.08rem; color:var(--nyu-purple);">' + esc(title) + '</div>';
+
+      if(t.opportunity_title){
+        html += '<div style="margin-top:8px; opacity:.9;">Opportunity: ' + esc(t.opportunity_title) + '</div>';
+      }
+      if(t.opportunity_url){
+        html += '<div style="margin-top:6px; opacity:.9;"><a href="' + esc(t.opportunity_url) + '" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">View announcement</a></div>';
+      }
+
+      if(members.length){
+        html += '<div style="margin-top:10px; opacity:.9;">' + members.map(esc).join(", ") + '</div>';
+      }
+
+      if(t.synopsis){
+        html += '<div style="margin-top:10px; line-height:1.45; opacity:.92;">' + esc(t.synopsis) + '</div>';
+      }
+
+      var why = t.rationale_detailed || t.rationale || "";
+      if(why){
+        html += '<div style="margin-top:10px; opacity:.9;">' + esc(why) + '</div>';
+      }
+
+      var aims = aimsList(t);
+      if(aims && aims.length){
+        html += '<div style="margin-top:10px;"><span style="opacity:.75;">Suggested aims:</span><ul style="margin:6px 0 0 18px; padding:0;">'
+             + aims.map(a => '<li style="margin-top:6px;">' + esc(a) + '</li>').join("")
+             + '</ul></div>';
+      }
+
+      if(t.next_steps){
+        html += '<div style="margin-top:10px;"><span style="opacity:.75;">Next steps:</span> ' + esc(t.next_steps) + '</div>';
+      }
+
+      if(t.confidence){
+        html += '<div style="margin-top:8px; opacity:.7;">Confidence: ' + esc(t.confidence) + '</div>';
+      } else if (typeof t.confidence_score === "number"){
+        html += '<div style="margin-top:8px; opacity:.7;">Match score: ' + esc(String(t.confidence_score)) + '</div>';
+      }
+
+      html += '</div>';
+    }
+
+    box.innerHTML = html;
+  }).catch(function(err){
+    box.innerHTML = '<pre style="white-space:pre-wrap; padding:16px;">' + esc(String(err)) + '</pre>';
+  });
+})();
+</script>
+</body>
+</html>
